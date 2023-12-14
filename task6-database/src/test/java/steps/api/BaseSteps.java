@@ -1,4 +1,4 @@
-package api;
+package steps.api;
 
 import config.EnvironmentConfig;
 import io.restassured.RestAssured;

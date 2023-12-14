@@ -1,4 +1,4 @@
-package api;
+package steps.api;
 
 import constants.Endpoints;
 import constants.Parameters;

@@ -1,7 +1,7 @@
-package tests;
+package tests.api;
 
-import api.PostsSteps;
-import api.UsersSteps;
+import steps.api.PostsSteps;
+import steps.api.UsersSteps;
 import constants.ApiResponsesPaths;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
