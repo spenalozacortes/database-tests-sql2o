@@ -10,8 +10,10 @@ public class DBTests {
 
     @Test
     public void test() {
-        Project project = projectSteps.getProjectById(1L);
-        System.out.println(project);
-    }
+        Project project = new Project();
+        project.setName("hello");
 
+        // projectSteps.addProject(project);
+        projectSteps.deleteProject(9L);
+    }
 }
