@@ -3,7 +3,7 @@ package api;
 import constants.Endpoints;
 import constants.Parameters;
 import io.restassured.response.Response;
-import models.PostResponse;
+import models.api.PostResponse;
 
 import java.util.List;
 

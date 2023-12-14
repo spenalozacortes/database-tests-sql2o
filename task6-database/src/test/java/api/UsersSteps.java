@@ -3,7 +3,7 @@ package api;
 import constants.Endpoints;
 import constants.Parameters;
 import io.restassured.response.Response;
-import models.UserResponse;
+import models.api.UserResponse;
 
 import java.util.List;
 import java.util.NoSuchElementException;
