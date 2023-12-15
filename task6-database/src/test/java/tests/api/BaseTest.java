@@ -1,11 +1,8 @@
 package tests.api;
 
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import models.database.Author;
 import models.database.Session;
-import models.database.Test;
+import models.database.TestModel;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
@@ -22,7 +19,7 @@ public abstract class BaseTest {
     private final Session session = new Session();
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
-    private final Test test = new Test();
+    private final TestModel test = new TestModel();
     private final TestSteps testSteps = new TestSteps();
     private Long sessionId;
     private Author author;

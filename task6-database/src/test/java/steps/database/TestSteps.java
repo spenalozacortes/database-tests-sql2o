@@ -1,12 +1,41 @@
 package steps.database;
 
-import models.database.Test;
+import models.database.TestModel;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestSteps extends BaseSteps {
 
-    public void addTest(Test test) {
+    public List<TestModel> getTests(int digits, int limit) {
+        List<TestModel> tests = new ArrayList<>();
+        String query = String.format("SELECT * FROM test WHERE id LIKE '%%%d%%' LIMIT %d", digits, limit);
+        try (ResultSet resultSet = select(query)) {
+            while(resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                Integer statusId = resultSet.getInt("status_id");
+                String methodName = resultSet.getString("method_name");
+                Long projectId = resultSet.getLong("project_id");
+                Long sessionId = resultSet.getLong("session_id");
+                LocalDateTime start_time = resultSet.getObject("start_time", LocalDateTime.class);
+                LocalDateTime end_time = resultSet.getObject("end_time", LocalDateTime.class);
+                String env = resultSet.getString("env");
+                String browser = resultSet.getString("browser");
+                Long authorId = resultSet.getLong("author_id");
+
+                tests.add(new TestModel(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tests;
+    }
+
+    public void addTest(TestModel test) {
         String name = test.getName();
         Integer statusId = test.getStatus_id();
         String methodName = test.getMethod_name();
