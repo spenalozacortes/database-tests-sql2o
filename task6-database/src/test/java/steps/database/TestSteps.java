@@ -15,8 +15,9 @@ public class TestSteps extends BaseSteps {
         LocalDateTime startTime = test.getStart_time();
         LocalDateTime endTime = test.getEnd_time();
         String env = test.getEnv();
+        Long authorId = test.getAuthor_id();
 
-        String sql = String.format("INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env) VALUES ('%s', %d, '%s', %d, %d, '%s', '%s', '%s')", name, statusId, methodName, projectId, sessionId, startTime, endTime, env);
+        String sql = String.format("INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, author_id) VALUES ('%s', %d, '%s', %d, %d, '%s', '%s', '%s', %d)", name, statusId, methodName, projectId, sessionId, startTime, endTime, env, authorId);
         insert(sql);
     }
 }

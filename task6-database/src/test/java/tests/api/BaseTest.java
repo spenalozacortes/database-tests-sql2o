@@ -3,11 +3,13 @@ package tests.api;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import models.database.Author;
 import models.database.Session;
 import models.database.Test;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
+import steps.database.AuthorSteps;
 import steps.database.SessionSteps;
 import steps.database.TestSteps;
 import utils.RandomUtils;
@@ -19,9 +21,12 @@ public abstract class BaseTest {
 
     private final Session session = new Session();
     private final SessionSteps sessionSteps = new SessionSteps();
+    private final AuthorSteps authorSteps = new AuthorSteps();
     private final Test test = new Test();
     private final TestSteps testSteps = new TestSteps();
     private Long sessionId;
+    private Author author;
+    private Long authorId;
 
     @BeforeTest
     public void setup() {
@@ -30,6 +35,19 @@ public abstract class BaseTest {
         session.setSession_key(RandomUtils.generateRandomNumber(13));
         session.setBuild_number(7L);
         sessionId = sessionSteps.addSession(session);
+
+        String name = "Stephanie";
+        String login = "gjlhkj";
+        String email = "smpc@mail.com";
+        author = authorSteps.getAuthorByLogin(login);
+        if (author.getId() == null) {
+            author.setName(name);
+            author.setLogin(login);
+            author.setEmail(email);
+            authorId = authorSteps.addAuthor(author);
+        } else {
+            authorId = author.getId();
+        }
     }
 
     @AfterMethod
@@ -57,7 +75,7 @@ public abstract class BaseTest {
         test.setStart_time(startTime);
         test.setEnd_time(endTime);
         test.setEnv(env);
-
+        test.setAuthor_id(authorId);
         testSteps.addTest(test);
     }
 }
