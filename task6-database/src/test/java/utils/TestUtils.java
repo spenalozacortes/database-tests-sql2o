@@ -1,6 +1,9 @@
 package utils;
 
 import lombok.experimental.UtilityClass;
+import org.testng.ITestResult;
+
+import java.time.Duration;
 
 @UtilityClass
 public class TestUtils {
@@ -12,5 +15,14 @@ public class TestUtils {
         } else {
             return "";
         }
+    }
+
+    public Duration getTestDuration(ITestResult result) {
+        long startTime = result.getStartMillis();
+        long endTime = result.getEndMillis();
+        long durationInMilliseconds = endTime - startTime;
+        long seconds = durationInMilliseconds / 1000;
+        long nanos = (durationInMilliseconds % 1000) * 1_000_000;
+        return Duration.ofSeconds(seconds, nanos);
     }
 }

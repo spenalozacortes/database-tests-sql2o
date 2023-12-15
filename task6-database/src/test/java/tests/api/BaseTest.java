@@ -40,6 +40,7 @@ public abstract class BaseTest {
         String methodName = String.format("%s.%s", TestUtils.getPackageName(className), name);
         Long projectId = 6L;
         LocalDateTime startTime = LocalDateTime.now();
+        LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result));
         String env = System.getenv("COMPUTERNAME");
 
         test.setName(name);
@@ -54,6 +55,7 @@ public abstract class BaseTest {
         test.setProject_id(projectId);
         test.setSession_id(sessionId);
         test.setStart_time(startTime);
+        test.setEnd_time(endTime);
         test.setEnv(env);
 
         testSteps.addTest(test);

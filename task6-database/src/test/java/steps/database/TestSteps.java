@@ -2,6 +2,8 @@ package steps.database;
 
 import models.database.Test;
 
+import java.time.LocalDateTime;
+
 public class TestSteps extends BaseSteps {
 
     public void addTest(Test test) {
@@ -10,8 +12,11 @@ public class TestSteps extends BaseSteps {
         String methodName = test.getMethod_name();
         Long projectId = test.getProject_id();
         Long sessionId = test.getSession_id();
+        LocalDateTime startTime = test.getStart_time();
+        LocalDateTime endTime = test.getEnd_time();
         String env = test.getEnv();
-        String sql = String.format("INSERT INTO test (name, status_id, method_name, project_id, session_id, env) VALUES ('%s', %d, '%s', %d, %d, '%s')", name, statusId, methodName, projectId, sessionId, env);
+
+        String sql = String.format("INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env) VALUES ('%s', %d, '%s', %d, %d, '%s', '%s', '%s')", name, statusId, methodName, projectId, sessionId, startTime, endTime, env);
         insert(sql);
     }
 }
