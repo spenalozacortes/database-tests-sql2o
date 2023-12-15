@@ -26,11 +26,11 @@ public class ProjectSteps extends BaseSteps {
     public void addProject(Project project) {
         String name = project.getName();
         String sql = String.format("INSERT INTO project (name) VALUES ('%s')", name);
-        update(sql);
+        insert(sql);
     }
 
     public void deleteProject(Long id) {
         String sql = String.format("DELETE FROM project WHERE id = %d", id);
-        update(sql);
+        delete(sql);
     }
 }
