@@ -1,5 +1,8 @@
 package tests.api;
 
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import models.database.Author;
 import models.database.Session;
 import models.database.TestModel;
@@ -27,14 +30,16 @@ public abstract class BaseTest {
 
     @BeforeSuite
     public void setup() {
-//        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
+        // Create and add session to database
         session.setSession_key(RandomUtils.generateRandomNumber(13));
         session.setBuild_number(7L);
         sessionId = sessionSteps.addSession(session);
 
+        // If author exists, get author id, else create and add author to database
         String name = "Stephanie";
-        String login = "gjlhkj";
+        String login = "smpc";
         String email = "smpc@mail.com";
         author = authorSteps.getAuthorByLogin(login);
         if (author.getId() == null) {
@@ -58,6 +63,7 @@ public abstract class BaseTest {
         LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result));
         String env = System.getenv("COMPUTERNAME");
 
+        // Create and add test to database
         test.setName(name);
         test.setMethod_name(methodName);
         if (status == 1) {
