@@ -91,4 +91,9 @@ public class TestSteps extends BaseSteps {
         String sql = "UPDATE test SET name = ?, status_id = ?, method_name = ?, project_id = ?, session_id = ?, start_time = ?, end_time = ?, env = ?, browser = ?, author_id = ? WHERE id = ?";
         update(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
     }
+
+    public void deleteTest(Long id) {
+        String query = String.format("DELETE FROM test WHERE id = %d", id);
+        delete(query);
+    }
 }

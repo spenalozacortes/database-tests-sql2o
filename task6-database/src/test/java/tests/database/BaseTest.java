@@ -1,6 +1,7 @@
 package tests.database;
 
 import models.database.TestDAO;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import steps.database.TestSteps;
 
@@ -21,6 +22,14 @@ public class BaseTest {
             test.setAuthor_id(1L);
             test.setProject_id(4L);
             newIds.add(testSteps.addTest(test));
+        }
+    }
+
+    @AfterTest
+    public void cleanup() {
+        // Delete copied tests from database
+        for (Long id : newIds) {
+            testSteps.deleteTest(id);
         }
     }
 }
