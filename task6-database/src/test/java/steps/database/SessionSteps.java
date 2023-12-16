@@ -1,10 +1,10 @@
 package steps.database;
 
-import models.database.Session;
+import models.database.SessionDAO;
 
 public class SessionSteps extends BaseSteps {
 
-    public Long addSession(Session session) {
+    public Long addSession(SessionDAO session) {
         String sessionKey = session.getSession_key();
         Long buildNumber = session.getBuild_number();
         String sql = "INSERT INTO session (session_key, build_number) VALUES (?, ?)";

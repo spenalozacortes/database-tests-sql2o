@@ -36,6 +36,17 @@ public abstract class BaseSteps {
         throw new RuntimeException("Failed to retrieve inserted ID");
     }
 
+    protected void update(String sql, Object... params) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                statement.setObject(i + 1, params[i]);
+            }
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void delete(String sql) {
         try {
             Statement statement = connection.createStatement();

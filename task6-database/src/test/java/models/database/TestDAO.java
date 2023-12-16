@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class TestModel {
+public class TestDAO {
     private Long id;
     private String name;
     private Integer status_id;
@@ -20,7 +20,7 @@ public class TestModel {
     private String browser;
     private Long author_id;
 
-    public TestModel(Long id, String name, Integer status_id, String method_name, Long project_id, Long session_id, LocalDateTime start_time, LocalDateTime end_time, String env, String browser, Long author_id) {
+    public TestDAO(Long id, String name, Integer status_id, String method_name, Long project_id, Long session_id, LocalDateTime start_time, LocalDateTime end_time, String env, String browser, Long author_id) {
         this.id = id;
         this.name = name;
         this.status_id = status_id;

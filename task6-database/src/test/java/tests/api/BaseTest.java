@@ -3,9 +3,9 @@ package tests.api;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import models.database.Author;
-import models.database.Session;
-import models.database.TestModel;
+import models.database.AuthorDAO;
+import models.database.SessionDAO;
+import models.database.TestDAO;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
@@ -19,13 +19,13 @@ import java.time.LocalDateTime;
 
 public abstract class BaseTest {
 
-    private final Session session = new Session();
+    private final SessionDAO session = new SessionDAO();
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
-    private final TestModel test = new TestModel();
+    private final TestDAO test = new TestDAO();
     private final TestSteps testSteps = new TestSteps();
     private Long sessionId;
-    private Author author;
+    private AuthorDAO author;
     private Long authorId;
 
     @BeforeSuite

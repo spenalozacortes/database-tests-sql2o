@@ -1,6 +1,6 @@
 package steps.database;
 
-import models.database.Project;
+import models.database.ProjectDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,11 +8,11 @@ import java.util.NoSuchElementException;
 
 public class ProjectSteps extends BaseSteps {
 
-    public Project getProjectById(Long id) {
+    public ProjectDAO getProjectById(Long id) {
         String query = String.format("SELECT * FROM project WHERE id = %d", id);
         try (ResultSet resultSet = select(query)) {
             if (resultSet.next()) {
-                return new Project(
+                return new ProjectDAO(
                         resultSet.getLong("id"),
                         resultSet.getString("name")
                 );
