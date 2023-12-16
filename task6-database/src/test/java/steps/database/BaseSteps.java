@@ -2,10 +2,7 @@ package steps.database;
 
 import utils.DatabaseUtils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class BaseSteps {
 
@@ -20,10 +17,12 @@ public abstract class BaseSteps {
         }
     }
 
-    protected Long insert(String sql) {
-        try {
-            Statement statement = connection.createStatement();
-            int rowsAffected = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+    protected Long insert(String sql, Object... params) {
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            for (int i = 0; i < params.length; i++) {
+                statement.setObject(i + 1, params[i]);
+            }
+            int rowsAffected = statement.executeUpdate();
             if (rowsAffected > 0) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {

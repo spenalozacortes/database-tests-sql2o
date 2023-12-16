@@ -10,9 +10,25 @@ import java.util.List;
 
 public class TestSteps extends BaseSteps {
 
-    public List<TestModel> getTests(int digits, int limit) {
+    public void addTest(TestModel test) {
+        String name = test.getName();
+        Integer statusId = test.getStatus_id();
+        String methodName = test.getMethod_name();
+        Long projectId = test.getProject_id();
+        Long sessionId = test.getSession_id();
+        LocalDateTime startTime = test.getStart_time();
+        LocalDateTime endTime = test.getEnd_time();
+        String env = test.getEnv();
+        String browser = test.getBrowser();
+        Long authorId = test.getAuthor_id();
+
+        String sql = "INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        insert(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+    }
+
+    public List<TestModel> getTests(String digits, int limit) {
         List<TestModel> tests = new ArrayList<>();
-        String query = String.format("SELECT * FROM test WHERE id LIKE '%%%d%%' LIMIT %d", digits, limit);
+        String query = String.format("SELECT * FROM test WHERE id LIKE '%%%s%%' LIMIT %d", digits, limit);
         try (ResultSet resultSet = select(query)) {
             while(resultSet.next()) {
                 Long id = resultSet.getLong("id");
@@ -33,20 +49,5 @@ public class TestSteps extends BaseSteps {
             throw new RuntimeException(e);
         }
         return tests;
-    }
-
-    public void addTest(TestModel test) {
-        String name = test.getName();
-        Integer statusId = test.getStatus_id();
-        String methodName = test.getMethod_name();
-        Long projectId = test.getProject_id();
-        Long sessionId = test.getSession_id();
-        LocalDateTime startTime = test.getStart_time();
-        LocalDateTime endTime = test.getEnd_time();
-        String env = test.getEnv();
-        Long authorId = test.getAuthor_id();
-
-        String sql = String.format("INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, author_id) VALUES ('%s', %d, '%s', %d, %d, '%s', '%s', '%s', %d)", name, statusId, methodName, projectId, sessionId, startTime, endTime, env, authorId);
-        insert(sql);
     }
 }

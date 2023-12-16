@@ -6,4 +6,9 @@
             <class name="tests.api.APITests"/>
         </classes>
     </test>
+    <test name="Database tests">
+        <classes>
+            <class name="tests.database.DataProcessingTest"/>
+        </classes>
+    </test>
 </suite>

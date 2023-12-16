@@ -5,7 +5,7 @@ import models.database.Session;
 import models.database.TestModel;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeSuite;
 import steps.database.AuthorSteps;
 import steps.database.SessionSteps;
 import steps.database.TestSteps;
@@ -25,7 +25,7 @@ public abstract class BaseTest {
     private Author author;
     private Long authorId;
 
-    @BeforeTest
+    @BeforeSuite
     public void setup() {
 //        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 

@@ -29,7 +29,7 @@ public class AuthorSteps extends BaseSteps {
         String name = author.getName();
         String login = author.getLogin();
         String email = author.getEmail();
-        String sql = String.format("INSERT INTO author (name, login, email) VALUES ('%s', '%s', '%s')", name, login, email);
-        return insert(sql);
+        String sql = "INSERT INTO author (name, login, email) VALUES (?, ?, ?)";
+        return insert(sql, name, login, email);
     }
 }
