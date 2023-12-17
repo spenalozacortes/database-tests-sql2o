@@ -9,7 +9,7 @@ import utils.TestUtils;
 public class DataProcessingTest extends BaseTest {
 
     private final TestSteps testSteps = new TestSteps();
-    private TestDAO test = new TestDAO();
+    private TestDAO test;
 
     @Test
     public void simulateTests() {
@@ -19,7 +19,7 @@ public class DataProcessingTest extends BaseTest {
             int newStatusId = TestUtils.getNewStatusId(initialStatusId);
             test.setStatus_id(newStatusId);
             testSteps.updateTest(test);
-            Assert.assertEquals(newStatusId, testSteps.getTestById(id).getStatus_id(), "Information is not updated");
+            Assert.assertEquals(newStatusId, testSteps.getTestById(id).getStatus_id(), "Information was not updated");
         }
     }
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @UtilityClass
 public class TestUtils {
 
+    private static final List<String> STATUS_IDS = new ArrayList<>(Arrays.asList("1", "2", "3"));
+
     public static String getPackageName(String className) {
         int lastDotIndex = className.lastIndexOf('.');
         if (lastDotIndex != -1) {
@@ -30,9 +32,8 @@ public class TestUtils {
     }
 
     public static int getNewStatusId(int initialStatusId) {
-        List<String> statusIds = new ArrayList<>(Arrays.asList("1", "2", "3"));
-        statusIds.remove(String.valueOf(initialStatusId));
-        int randomIndex = RandomUtils.getRandomInt(statusIds.size());
-        return Integer.parseInt(statusIds.get(randomIndex));
+        STATUS_IDS.remove(String.valueOf(initialStatusId));
+        int randomIndex = RandomUtils.getRandomInt(STATUS_IDS.size());
+        return Integer.parseInt(STATUS_IDS.get(randomIndex));
     }
 }
