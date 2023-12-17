@@ -3,15 +3,12 @@ package tests.api;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import models.database.SessionDAO;
 import models.database.TestDAO;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
-import steps.database.SessionSteps;
 import steps.database.TestSteps;
-import utils.RandomUtils;
 import utils.SessionUtils;
 import utils.TestUtils;
 
@@ -20,26 +17,17 @@ import java.time.LocalDateTime;
 public abstract class BaseTest {
 
     private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
-    private static final int SESSION_KEY_LENGTH = 13;
-    private static final Long BUILD_NUMBER = 7L;
+    private static final Long SESSION_ID = SessionUtils.getSessionId();
     private static final Long PROJECT_ID = 6L;
     private static final String ENV = System.getenv("COMPUTERNAME");
-    private final SessionDAO session = new SessionDAO();
-    private final SessionSteps sessionSteps = new SessionSteps();
     private final TestSteps testSteps = new TestSteps();
     private TestDAO test;
     private TestDAO testFromDb;
-    private Long sessionId;
     private Long testId;
 
     @BeforeSuite
     public void setup() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-
-        // Create and add session to database
-        session.setSession_key(RandomUtils.generateRandomNumber(SESSION_KEY_LENGTH));
-        session.setBuild_number(BUILD_NUMBER);
-        sessionId = sessionSteps.addSession(session);
     }
 
     @AfterMethod
@@ -64,7 +52,7 @@ public abstract class BaseTest {
             test.setStatus_id(3);
         }
         test.setProject_id(PROJECT_ID);
-        test.setSession_id(sessionId);
+        test.setSession_id(SESSION_ID);
         test.setStart_time(startTime);
         test.setEnd_time(endTime);
         test.setEnv(ENV);
