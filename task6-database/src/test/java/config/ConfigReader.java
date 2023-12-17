@@ -1,5 +1,6 @@
 package config;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -17,7 +18,7 @@ public class ConfigReader {
         }
     }
 
-    public String getValueByKey(String key) {
-        return environment.get(key).getAsString();
+    public JsonElement getValueByKey(String key) {
+        return environment.get(key);
     }
 }
