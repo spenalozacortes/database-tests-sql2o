@@ -18,7 +18,7 @@ public abstract class BaseTest {
 
     private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
     private static final Long SESSION_ID = SessionUtils.getSessionId();
-    private static final Long PROJECT_ID = 6L;
+    private static final Long PROJECT_ID = SessionUtils.getProjectId();
     private static final String ENV = System.getenv("COMPUTERNAME");
     private final TestSteps testSteps = new TestSteps();
     private TestDAO test;
