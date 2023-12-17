@@ -2,6 +2,7 @@ package tests.database;
 
 import models.database.AuthorDAO;
 import models.database.TestDAO;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import steps.database.AuthorSteps;
@@ -45,6 +46,7 @@ public class BaseTest {
         // Delete copied tests from database
         for (Long id : newIds) {
             testSteps.deleteTest(id);
+            Assert.assertNull(testSteps.getTestById(id).getId(), "Test was not deleted");
         }
     }
 }

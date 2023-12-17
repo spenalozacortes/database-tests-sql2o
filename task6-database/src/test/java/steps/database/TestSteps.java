@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class TestSteps extends BaseSteps {
 
@@ -27,11 +26,12 @@ public class TestSteps extends BaseSteps {
                 Long authorId = resultSet.getLong("author_id");
 
                 return new TestDAO(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId);
+            } else {
+                return new TestDAO();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new NoSuchElementException(String.format("Test with id %d not found", id));
     }
 
     public List<TestDAO> getTests(String digits, int limit) {
