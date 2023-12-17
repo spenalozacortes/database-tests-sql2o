@@ -6,6 +6,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import models.database.AuthorDAO;
 import models.database.SessionDAO;
 import models.database.TestDAO;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
@@ -19,33 +20,39 @@ import java.time.LocalDateTime;
 
 public abstract class BaseTest {
 
+    private static final int SESSION_KEY_LENGTH = 13;
+    private static final Long BUILD_NUMBER = 7L;
+    private static final String NAME = "Stephanie";
+    private static final String LOGIN = "smpc";
+    private static final String EMAIL = "smpc@mail.com";
+    private static final Long PROJECT_ID = 6L;
+    private static final String ENV = System.getenv("COMPUTERNAME");
     private final SessionDAO session = new SessionDAO();
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
-    private final TestDAO test = new TestDAO();
     private final TestSteps testSteps = new TestSteps();
-    private Long sessionId;
     private AuthorDAO author;
+    private TestDAO test;
+    private TestDAO testFromDb;
+    private Long sessionId;
     private Long authorId;
+    private Long testId;
 
     @BeforeSuite
     public void setup() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         // Create and add session to database
-        session.setSession_key(RandomUtils.generateRandomNumber(13));
-        session.setBuild_number(7L);
+        session.setSession_key(RandomUtils.generateRandomNumber(SESSION_KEY_LENGTH));
+        session.setBuild_number(BUILD_NUMBER);
         sessionId = sessionSteps.addSession(session);
 
         // If author exists, get author id, else create and add author to database
-        String name = "Stephanie";
-        String login = "smpc";
-        String email = "smpc@mail.com";
-        author = authorSteps.getAuthorByLogin(login);
+        author = authorSteps.getAuthorByLogin(LOGIN);
         if (author.getId() == null) {
-            author.setName(name);
-            author.setLogin(login);
-            author.setEmail(email);
+            author.setName(NAME);
+            author.setLogin(LOGIN);
+            author.setEmail(EMAIL);
             authorId = authorSteps.addAuthor(author);
         } else {
             authorId = author.getId();
@@ -54,16 +61,16 @@ public abstract class BaseTest {
 
     @AfterMethod
     public void afterTest(ITestResult result) {
+        // Get info from current test
         int status = result.getStatus();
         String name = result.getMethod().getMethodName();
         String className = result.getTestClass().getName();
         String methodName = String.format("%s.%s", TestUtils.getPackageName(className), name);
-        Long projectId = 6L;
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result));
-        String env = System.getenv("COMPUTERNAME");
+        LocalDateTime startTime = LocalDateTime.now().withNano(0);
+        LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
 
         // Create and add test to database
+        test = new TestDAO();
         test.setName(name);
         test.setMethod_name(methodName);
         if (status == 1) {
@@ -73,12 +80,17 @@ public abstract class BaseTest {
         } else {
             test.setStatus_id(3);
         }
-        test.setProject_id(projectId);
+        test.setProject_id(PROJECT_ID);
         test.setSession_id(sessionId);
         test.setStart_time(startTime);
         test.setEnd_time(endTime);
-        test.setEnv(env);
+        test.setEnv(ENV);
         test.setAuthor_id(authorId);
-        testSteps.addTest(test);
+        testId = testSteps.addTest(test);
+        test.setId(testId);
+
+        // Assert test was added to database
+        testFromDb = testSteps.getTestById(testId);
+        Assert.assertEquals(test, testFromDb, "Test added to database is not correct");
     }
 }
