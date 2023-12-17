@@ -23,7 +23,7 @@ public abstract class BaseTest {
     private static final int SESSION_KEY_LENGTH = 13;
     private static final Long BUILD_NUMBER = 7L;
     private static final String NAME = "Stephanie";
-    private static final String LOGIN = "smpc";
+    private static final String LOGIN = "smpcsdfsdf";
     private static final String EMAIL = "smpc@mail.com";
     private static final Long PROJECT_ID = 6L;
     private static final String ENV = System.getenv("COMPUTERNAME");
