@@ -3,7 +3,7 @@ package config;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class DataReader {
+public class TestDataConfig {
     private static final ConfigReader CONFIG_READER = new ConfigReader("src/test/resources/testData.json");
 
     public static String getAuthorName() {

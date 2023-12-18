@@ -1,6 +1,6 @@
 package utils;
 
-import config.DataReader;
+import config.TestDataConfig;
 import lombok.experimental.UtilityClass;
 import models.database.AuthorDAO;
 import models.database.ProjectDAO;
@@ -12,11 +12,11 @@ import steps.database.SessionSteps;
 @UtilityClass
 public class SessionUtils {
 
-    private static final String LOGIN = DataReader.getAuthorLogin();
-    private static final String AUTHOR_NAME = DataReader.getAuthorName();
-    private static final String EMAIL = DataReader.getAuthorEmail();
-    private static final String PROJECT_NAME = DataReader.getProjectName();
-    private static final Long BUILD_NUMBER = DataReader.getBuildNumber();
+    private static final String LOGIN = TestDataConfig.getAuthorLogin();
+    private static final String AUTHOR_NAME = TestDataConfig.getAuthorName();
+    private static final String EMAIL = TestDataConfig.getAuthorEmail();
+    private static final String PROJECT_NAME = TestDataConfig.getProjectName();
+    private static final Long BUILD_NUMBER = TestDataConfig.getBuildNumber();
     private static final int SESSION_KEY_LENGTH = 13;
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
