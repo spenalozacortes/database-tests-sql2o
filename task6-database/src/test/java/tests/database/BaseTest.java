@@ -1,6 +1,6 @@
 package tests.database;
 
-import models.database.TestDAO;
+import models.database.TestDao;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -24,11 +24,11 @@ public class BaseTest {
     public void setup() {
         // Get list of tests from database
         int randomDigit = RandomUtils.getRandomInt(DIGIT_RANGE);
-        List<TestDAO> tests = testSteps.getTests(String.format("%d%d", randomDigit, randomDigit), MAX_TESTS);
-        for (TestDAO test : tests) {
+        List<TestDao> tests = testSteps.getTests(String.format("%d%d", randomDigit, randomDigit), MAX_TESTS);
+        for (TestDao test : tests) {
             // Set current author and project
-            test.setAuthor_id(AUTHOR_ID);
-            test.setProject_id(PROJECT_ID);
+            test.setAuthorId(AUTHOR_ID);
+            test.setProjectId(PROJECT_ID);
             newIds.add(testSteps.addTest(test));
         }
     }

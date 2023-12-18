@@ -2,9 +2,9 @@ package utils;
 
 import config.TestDataConfig;
 import lombok.experimental.UtilityClass;
-import models.database.AuthorDAO;
-import models.database.ProjectDAO;
-import models.database.SessionDAO;
+import models.database.AuthorDao;
+import models.database.ProjectDao;
+import models.database.SessionDao;
 import steps.database.AuthorSteps;
 import steps.database.ProjectSteps;
 import steps.database.SessionSteps;
@@ -21,14 +21,14 @@ public class SessionUtils {
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
     private final ProjectSteps projectSteps = new ProjectSteps();
-    private final SessionDAO session = new SessionDAO();
-    private AuthorDAO author;
-    private ProjectDAO project;
+    private final SessionDao session = new SessionDao();
+    private AuthorDao author;
+    private ProjectDao project;
 
     public static Long getSessionId() {
         // Create and add session to database
-        session.setSession_key(RandomUtils.generateRandomNumber(SESSION_KEY_LENGTH));
-        session.setBuild_number(BUILD_NUMBER);
+        session.setSessionKey(RandomUtils.generateRandomNumber(SESSION_KEY_LENGTH));
+        session.setBuildNumber(BUILD_NUMBER);
         return sessionSteps.addSession(session);
     }
 

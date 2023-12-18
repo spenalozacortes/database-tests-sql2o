@@ -3,7 +3,7 @@ package tests.api;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import models.database.TestDAO;
+import models.database.TestDao;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -21,8 +21,8 @@ public abstract class BaseTest {
     private static final Long PROJECT_ID = SessionUtils.getProjectId();
     private static final String ENV = System.getenv("COMPUTERNAME");
     private final TestSteps testSteps = new TestSteps();
-    private TestDAO test;
-    private TestDAO testFromDb;
+    private TestDao test;
+    private TestDao testFromDb;
     private Long testId;
 
     @BeforeSuite
@@ -41,22 +41,22 @@ public abstract class BaseTest {
         LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
 
         // Create and add test to database
-        test = new TestDAO();
+        test = new TestDao();
         test.setName(name);
-        test.setMethod_name(methodName);
+        test.setMethodName(methodName);
         if (status == 1) {
-            test.setStatus_id(1);
+            test.setStatusId(1);
         } else if (status == 2) {
-            test.setStatus_id(2);
+            test.setStatusId(2);
         } else {
-            test.setStatus_id(3);
+            test.setStatusId(3);
         }
-        test.setProject_id(PROJECT_ID);
-        test.setSession_id(SESSION_ID);
-        test.setStart_time(startTime);
-        test.setEnd_time(endTime);
+        test.setProjectId(PROJECT_ID);
+        test.setSessionId(SESSION_ID);
+        test.setStartTime(startTime);
+        test.setEndTime(endTime);
         test.setEnv(ENV);
-        test.setAuthor_id(AUTHOR_ID);
+        test.setAuthorId(AUTHOR_ID);
         testId = testSteps.addTest(test);
         test.setId(testId);
 

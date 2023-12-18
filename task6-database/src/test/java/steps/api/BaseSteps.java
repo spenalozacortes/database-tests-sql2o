@@ -9,7 +9,7 @@ public abstract class BaseSteps {
 
     protected RequestSpecification getBaseReq() {
         return RestAssured.given()
-                .baseUri(EnvironmentConfig.getBaseURI())
+                .baseUri(EnvironmentConfig.getBaseUri())
                 .contentType(ContentType.JSON);
     }
 }

@@ -1,6 +1,6 @@
 package steps.database;
 
-import models.database.TestDAO;
+import models.database.TestDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TestSteps extends BaseSteps {
 
-    public TestDAO getTestById(Long id) {
+    public TestDao getTestById(Long id) {
         String query = String.format("SELECT * FROM test WHERE id = %d", id);
         try (ResultSet resultSet = select(query)) {
             if (resultSet.next()) {
@@ -25,17 +25,17 @@ public class TestSteps extends BaseSteps {
                 String browser = resultSet.getString("browser");
                 Long authorId = resultSet.getLong("author_id");
 
-                return new TestDAO(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId);
+                return new TestDao(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId);
             } else {
-                return new TestDAO();
+                return new TestDao();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<TestDAO> getTests(String digits, int limit) {
-        List<TestDAO> tests = new ArrayList<>();
+    public List<TestDao> getTests(String digits, int limit) {
+        List<TestDao> tests = new ArrayList<>();
         String query = String.format("SELECT * FROM test WHERE id LIKE '%%%s%%' LIMIT %d", digits, limit);
         try (ResultSet resultSet = select(query)) {
             while(resultSet.next()) {
@@ -51,7 +51,7 @@ public class TestSteps extends BaseSteps {
                 String browser = resultSet.getString("browser");
                 Long authorId = resultSet.getLong("author_id");
 
-                tests.add(new TestDAO(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId));
+                tests.add(new TestDao(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,34 +59,34 @@ public class TestSteps extends BaseSteps {
         return tests;
     }
 
-    public Long addTest(TestDAO test) {
+    public Long addTest(TestDao test) {
         String name = test.getName();
-        Integer statusId = test.getStatus_id();
-        String methodName = test.getMethod_name();
-        Long projectId = test.getProject_id();
-        Long sessionId = test.getSession_id();
-        LocalDateTime startTime = test.getStart_time();
-        LocalDateTime endTime = test.getEnd_time();
+        Integer statusId = test.getStatusId();
+        String methodName = test.getMethodName();
+        Long projectId = test.getProjectId();
+        Long sessionId = test.getSessionId();
+        LocalDateTime startTime = test.getStartTime();
+        LocalDateTime endTime = test.getEndTime();
         String env = test.getEnv();
         String browser = test.getBrowser();
-        Long authorId = test.getAuthor_id();
+        Long authorId = test.getAuthorId();
 
         String sql = "INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return insert(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
     }
 
-    public void updateTest(TestDAO test) {
+    public void updateTest(TestDao test) {
         Long id = test.getId();
         String name = test.getName();
-        Integer statusId = test.getStatus_id();
-        String methodName = test.getMethod_name();
-        Long projectId = test.getProject_id();
-        Long sessionId = test.getSession_id();
-        LocalDateTime startTime = test.getStart_time();
-        LocalDateTime endTime = test.getEnd_time();
+        Integer statusId = test.getStatusId();
+        String methodName = test.getMethodName();
+        Long projectId = test.getProjectId();
+        Long sessionId = test.getSessionId();
+        LocalDateTime startTime = test.getStartTime();
+        LocalDateTime endTime = test.getEndTime();
         String env = test.getEnv();
         String browser = test.getBrowser();
-        Long authorId = test.getAuthor_id();
+        Long authorId = test.getAuthorId();
 
         String sql = "UPDATE test SET name = ?, status_id = ?, method_name = ?, project_id = ?, session_id = ?, start_time = ?, end_time = ?, env = ?, browser = ?, author_id = ? WHERE id = ?";
         update(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);

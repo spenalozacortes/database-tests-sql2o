@@ -15,7 +15,7 @@ import utils.JsonMapperUtils;
 import utils.RandomUtils;
 import utils.ResponseUtils;
 
-public class APITests extends BaseTest {
+public class ApiTests extends BaseTest {
 
     private static final int POST_ID = 99;
     private static final int POST_ID_NOT_FOUND = 150;

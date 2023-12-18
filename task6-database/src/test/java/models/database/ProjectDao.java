@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProjectDAO {
+public class ProjectDao {
     private Long id;
     private String name;
 
-    public ProjectDAO(Long id, String name) {
+    public ProjectDao(Long id, String name) {
         this.id = id;
         this.name = name;
     }
