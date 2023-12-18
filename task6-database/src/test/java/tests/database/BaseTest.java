@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import steps.database.TestSteps;
+import utils.DatabaseUtils;
 import utils.RandomUtils;
 import utils.SessionUtils;
 
@@ -40,5 +41,7 @@ public class BaseTest {
             testSteps.deleteTest(id);
             Assert.assertNull(testSteps.getTestById(id).getId(), "Test was not deleted");
         }
+
+        DatabaseUtils.closeConnection();
     }
 }
