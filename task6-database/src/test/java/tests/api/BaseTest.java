@@ -1,5 +1,6 @@
 package tests.api;
 
+import constants.Statuses;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -43,6 +44,7 @@ public abstract class BaseTest {
         // Create and add test to database
         test = TestDao.builder()
                 .name(name)
+                .statusId(Statuses.fromInt(status).getStatusId())
                 .methodName(methodName)
                 .projectId(PROJECT_ID)
                 .sessionId(SESSION_ID)
@@ -51,13 +53,6 @@ public abstract class BaseTest {
                 .env(ENV)
                 .authorId(AUTHOR_ID)
                 .build();
-        if (status == 1) {
-            test.setStatusId(1);
-        } else if (status == 2) {
-            test.setStatusId(2);
-        } else {
-            test.setStatusId(3);
-        }
         testId = testSteps.addTest(test);
         test.setId(testId);
 
