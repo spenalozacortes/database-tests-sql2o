@@ -1,5 +1,6 @@
 package utils;
 
+import config.DatabaseConfig;
 import lombok.experimental.UtilityClass;
 
 import java.sql.Connection;
@@ -9,9 +10,9 @@ import java.sql.SQLException;
 @UtilityClass
 public class DatabaseUtils {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/union_reporting";
-    private static final String USER = "root";
-    private static final String PASSWORD = "toor";
+    private static final String URL = DatabaseConfig.getUrl();
+    private static final String USER = DatabaseConfig.getUser();
+    private static final String PASSWORD = DatabaseConfig.getPassword();
     private static Connection connection;
 
     public static Connection getConnection() {
