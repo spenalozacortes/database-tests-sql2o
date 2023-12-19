@@ -1,5 +1,6 @@
 package steps.database;
 
+import constants.Queries;
 import models.database.TestDao;
 
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.util.List;
 public class TestSteps extends BaseSteps {
 
     public TestDao getTestById(Long id) {
-        String query = String.format("SELECT * FROM test WHERE id = %d", id);
+        String query = String.format(Queries.GET_TEST_BY_ID, id);
         try (ResultSet resultSet = select(query)) {
             if (resultSet.next()) {
                 return TestDao.builder()
@@ -37,7 +38,7 @@ public class TestSteps extends BaseSteps {
 
     public List<TestDao> getTests(String digits, int limit) {
         List<TestDao> tests = new ArrayList<>();
-        String query = String.format("SELECT * FROM test WHERE id LIKE '%%%s%%' LIMIT %d", digits, limit);
+        String query = String.format(Queries.GET_TESTS, digits, limit);
         try (ResultSet resultSet = select(query)) {
             while(resultSet.next()) {
                 tests.add(TestDao.builder()
@@ -72,8 +73,7 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        String sql = "INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return insert(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+        return insert(Queries.ADD_TEST, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
     }
 
     public void updateTest(TestDao test) {
@@ -89,12 +89,11 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        String sql = "UPDATE test SET name = ?, status_id = ?, method_name = ?, project_id = ?, session_id = ?, start_time = ?, end_time = ?, env = ?, browser = ?, author_id = ? WHERE id = ?";
-        update(sql, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
+        update(Queries.UPDATE_TEST, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
     }
 
     public void deleteTest(Long id) {
-        String query = String.format("DELETE FROM test WHERE id = %d", id);
+        String query = String.format(Queries.DELETE_TEST, id);
         delete(query);
     }
 }
