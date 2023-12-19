@@ -17,7 +17,6 @@ public class SessionUtils {
     private static final String EMAIL = TestDataConfig.getAuthorEmail();
     private static final String PROJECT_NAME = TestDataConfig.getProjectName();
     private static final Long BUILD_NUMBER = TestDataConfig.getBuildNumber();
-    private static final int SESSION_KEY_LENGTH = 13;
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
     private final ProjectSteps projectSteps = new ProjectSteps();
@@ -27,7 +26,7 @@ public class SessionUtils {
 
     public static Long getSessionId() {
         // Create and add session to database
-        session.setSessionKey(RandomUtils.generateRandomNumber(SESSION_KEY_LENGTH));
+        session.setSessionKey(RandomUtils.generateSessionId());
         session.setBuildNumber(BUILD_NUMBER);
         return sessionSteps.addSession(session);
     }
