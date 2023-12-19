@@ -1,5 +1,6 @@
 package utils;
 
+import constants.Statuses;
 import lombok.experimental.UtilityClass;
 
 import java.util.Random;
@@ -26,5 +27,9 @@ public class RandomUtils {
 
     public static String generateSessionId() {
         return UUID.randomUUID().toString();
+    }
+
+    public static int getRandomStatus() {
+        return Statuses.values()[getRandomInt(Statuses.values().length)].getStatusId();
     }
 }

@@ -4,7 +4,7 @@ import models.database.TestDao;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.database.TestSteps;
-import utils.TestUtils;
+import utils.RandomUtils;
 
 public class DataProcessingTest extends BaseTest {
 
@@ -15,8 +15,7 @@ public class DataProcessingTest extends BaseTest {
     public void simulateTests() {
         for(Long id : newIds) {
             test = testSteps.getTestById(id);
-            int initialStatusId = test.getStatusId();
-            int newStatusId = TestUtils.getNewStatusId(initialStatusId);
+            int newStatusId = RandomUtils.getRandomStatus();
             test.setStatusId(newStatusId);
             testSteps.updateTest(test);
             Assert.assertEquals(newStatusId, testSteps.getTestById(id).getStatusId(), "Information was not updated");
