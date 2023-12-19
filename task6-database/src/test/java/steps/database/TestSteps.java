@@ -2,6 +2,7 @@ package steps.database;
 
 import constants.Queries;
 import models.database.TestDao;
+import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,23 +15,7 @@ public class TestSteps extends BaseSteps {
     public TestDao getTestById(Long id) {
         String query = String.format(Queries.GET_TEST_BY_ID, id);
         try (ResultSet resultSet = select(query)) {
-            if (resultSet.next()) {
-                return TestDao.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .statusId(resultSet.getInt("status_id"))
-                        .methodName(resultSet.getString("method_name"))
-                        .projectId(resultSet.getLong("project_id"))
-                        .sessionId(resultSet.getLong("session_id"))
-                        .startTime(resultSet.getObject("start_time", LocalDateTime.class))
-                        .endTime(resultSet.getObject("end_time", LocalDateTime.class))
-                        .env(resultSet.getString("env"))
-                        .browser(resultSet.getString("browser"))
-                        .authorId(resultSet.getLong("author_id"))
-                        .build();
-            } else {
-                return new TestDao();
-            }
+            return ResultSetUtils.mapToTest(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -40,20 +25,8 @@ public class TestSteps extends BaseSteps {
         List<TestDao> tests = new ArrayList<>();
         String query = String.format(Queries.GET_TESTS, digits, limit);
         try (ResultSet resultSet = select(query)) {
-            while(resultSet.next()) {
-                tests.add(TestDao.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .statusId(resultSet.getInt("status_id"))
-                        .methodName(resultSet.getString("method_name"))
-                        .projectId(resultSet.getLong("project_id"))
-                        .sessionId(resultSet.getLong("session_id"))
-                        .startTime(resultSet.getObject("start_time", LocalDateTime.class))
-                        .endTime(resultSet.getObject("end_time", LocalDateTime.class))
-                        .env(resultSet.getString("env"))
-                        .browser(resultSet.getString("browser"))
-                        .authorId(resultSet.getLong("author_id"))
-                        .build());
+            while (resultSet.next()) {
+                tests.add(ResultSetUtils.mapToTest(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
