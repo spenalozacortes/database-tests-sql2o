@@ -41,9 +41,16 @@ public abstract class BaseTest {
         LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
 
         // Create and add test to database
-        test = new TestDao();
-        test.setName(name);
-        test.setMethodName(methodName);
+        test = TestDao.builder()
+                .name(name)
+                .methodName(methodName)
+                .projectId(PROJECT_ID)
+                .sessionId(SESSION_ID)
+                .startTime(startTime)
+                .endTime(endTime)
+                .env(ENV)
+                .authorId(AUTHOR_ID)
+                .build();
         if (status == 1) {
             test.setStatusId(1);
         } else if (status == 2) {
@@ -51,12 +58,6 @@ public abstract class BaseTest {
         } else {
             test.setStatusId(3);
         }
-        test.setProjectId(PROJECT_ID);
-        test.setSessionId(SESSION_ID);
-        test.setStartTime(startTime);
-        test.setEndTime(endTime);
-        test.setEnv(ENV);
-        test.setAuthorId(AUTHOR_ID);
         testId = testSteps.addTest(test);
         test.setId(testId);
 

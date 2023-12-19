@@ -14,18 +14,19 @@ public class TestSteps extends BaseSteps {
         String query = String.format("SELECT * FROM test WHERE id = %d", id);
         try (ResultSet resultSet = select(query)) {
             if (resultSet.next()) {
-                String name = resultSet.getString("name");
-                Integer statusId = resultSet.getInt("status_id");
-                String methodName = resultSet.getString("method_name");
-                Long projectId = resultSet.getLong("project_id");
-                Long sessionId = resultSet.getLong("session_id");
-                LocalDateTime start_time = resultSet.getObject("start_time", LocalDateTime.class);
-                LocalDateTime end_time = resultSet.getObject("end_time", LocalDateTime.class);
-                String env = resultSet.getString("env");
-                String browser = resultSet.getString("browser");
-                Long authorId = resultSet.getLong("author_id");
-
-                return new TestDao(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId);
+                return TestDao.builder()
+                        .id(resultSet.getLong("id"))
+                        .name(resultSet.getString("name"))
+                        .statusId(resultSet.getInt("status_id"))
+                        .methodName(resultSet.getString("method_name"))
+                        .projectId(resultSet.getLong("project_id"))
+                        .sessionId(resultSet.getLong("session_id"))
+                        .startTime(resultSet.getObject("start_time", LocalDateTime.class))
+                        .endTime(resultSet.getObject("end_time", LocalDateTime.class))
+                        .env(resultSet.getString("env"))
+                        .browser(resultSet.getString("browser"))
+                        .authorId(resultSet.getLong("author_id"))
+                        .build();
             } else {
                 return new TestDao();
             }
@@ -39,19 +40,19 @@ public class TestSteps extends BaseSteps {
         String query = String.format("SELECT * FROM test WHERE id LIKE '%%%s%%' LIMIT %d", digits, limit);
         try (ResultSet resultSet = select(query)) {
             while(resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                Integer statusId = resultSet.getInt("status_id");
-                String methodName = resultSet.getString("method_name");
-                Long projectId = resultSet.getLong("project_id");
-                Long sessionId = resultSet.getLong("session_id");
-                LocalDateTime start_time = resultSet.getObject("start_time", LocalDateTime.class);
-                LocalDateTime end_time = resultSet.getObject("end_time", LocalDateTime.class);
-                String env = resultSet.getString("env");
-                String browser = resultSet.getString("browser");
-                Long authorId = resultSet.getLong("author_id");
-
-                tests.add(new TestDao(id, name, statusId, methodName, projectId, sessionId, start_time, end_time, env, browser, authorId));
+                tests.add(TestDao.builder()
+                        .id(resultSet.getLong("id"))
+                        .name(resultSet.getString("name"))
+                        .statusId(resultSet.getInt("status_id"))
+                        .methodName(resultSet.getString("method_name"))
+                        .projectId(resultSet.getLong("project_id"))
+                        .sessionId(resultSet.getLong("session_id"))
+                        .startTime(resultSet.getObject("start_time", LocalDateTime.class))
+                        .endTime(resultSet.getObject("end_time", LocalDateTime.class))
+                        .env(resultSet.getString("env"))
+                        .browser(resultSet.getString("browser"))
+                        .authorId(resultSet.getLong("author_id"))
+                        .build());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
