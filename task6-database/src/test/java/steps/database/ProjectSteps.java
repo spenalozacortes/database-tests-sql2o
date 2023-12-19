@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ProjectSteps extends BaseSteps {
 
     public ProjectDao getProjectByName(String name) {
-        String query = String.format(Queries.GET_PROJECT_BY_NAME, name);
+        String query = String.format(Queries.GET_PROJECT_BY_NAME.getQuery(), name);
         try (ResultSet resultSet = select(query)) {
             return ResultSetUtils.mapToProject(resultSet);
         } catch (SQLException e) {
@@ -20,7 +20,7 @@ public class ProjectSteps extends BaseSteps {
 
     public Long addProject(ProjectDao project) {
         String name = project.getName();
-        String sql = String.format(Queries.ADD_PROJECT, name);
+        String sql = String.format(Queries.ADD_PROJECT.getQuery(), name);
         return insert(sql);
     }
 }

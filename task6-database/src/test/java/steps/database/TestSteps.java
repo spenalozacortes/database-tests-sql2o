@@ -13,7 +13,7 @@ import java.util.List;
 public class TestSteps extends BaseSteps {
 
     public TestDao getTestById(Long id) {
-        String query = String.format(Queries.GET_TEST_BY_ID, id);
+        String query = String.format(Queries.GET_TEST_BY_ID.getQuery(), id);
         try (ResultSet resultSet = select(query)) {
             return ResultSetUtils.mapToTest(resultSet);
         } catch (SQLException e) {
@@ -23,7 +23,7 @@ public class TestSteps extends BaseSteps {
 
     public List<TestDao> getTests(String digits, int limit) {
         List<TestDao> tests = new ArrayList<>();
-        String query = String.format(Queries.GET_TESTS, digits, limit);
+        String query = String.format(Queries.GET_TESTS.getQuery(), digits, limit);
         try (ResultSet resultSet = select(query)) {
             while (resultSet.next()) {
                 tests.add(ResultSetUtils.mapToTest(resultSet));
@@ -46,7 +46,7 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        return insert(Queries.ADD_TEST, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+        return insert(Queries.ADD_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
     }
 
     public void updateTest(TestDao test) {
@@ -62,11 +62,11 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        update(Queries.UPDATE_TEST, name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
+        update(Queries.UPDATE_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
     }
 
     public void deleteTest(Long id) {
-        String query = String.format(Queries.DELETE_TEST, id);
+        String query = String.format(Queries.DELETE_TEST.getQuery(), id);
         delete(query);
     }
 }

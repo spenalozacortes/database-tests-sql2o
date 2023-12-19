@@ -1,19 +1,24 @@
 package constants;
 
 import config.QueriesConfig;
-import lombok.experimental.UtilityClass;
+import lombok.Getter;
 
-@UtilityClass
-public class Queries {
+@Getter
+public enum Queries {
+    GET_AUTHOR_BY_LOGIN(QueriesConfig.getAuthorByLogin()),
+    ADD_AUTHOR(QueriesConfig.getAddAuthor()),
+    GET_PROJECT_BY_NAME(QueriesConfig.getProjectByName()),
+    ADD_PROJECT(QueriesConfig.getAddProject()),
+    ADD_SESSION(QueriesConfig.getAddSession()),
+    GET_TEST_BY_ID(QueriesConfig.getTestById()),
+    GET_TESTS(QueriesConfig.getTests()),
+    ADD_TEST(QueriesConfig.getAddTest()),
+    UPDATE_TEST(QueriesConfig.getUpdateTest()),
+    DELETE_TEST(QueriesConfig.getDeleteTest());
 
-    public static final String GET_AUTHOR_BY_LOGIN = QueriesConfig.getAuthorByLogin();
-    public static final String ADD_AUTHOR = QueriesConfig.getAddAuthor();
-    public static final String GET_PROJECT_BY_NAME = QueriesConfig.getProjectByName();
-    public static final String ADD_PROJECT = QueriesConfig.getAddProject();
-    public static final String ADD_SESSION = QueriesConfig.getAddSession();
-    public static final String GET_TEST_BY_ID = QueriesConfig.getTestById();
-    public static final String GET_TESTS = QueriesConfig.getTests();
-    public static final String ADD_TEST = QueriesConfig.getAddTest();
-    public static final String UPDATE_TEST = QueriesConfig.getUpdateTest();
-    public static final String DELETE_TEST = QueriesConfig.getDeleteTest();
+    private final String query;
+
+    Queries(String query) {
+        this.query = query;
+    }
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class AuthorSteps extends BaseSteps {
 
     public AuthorDao getAuthorByLogin(String login) {
-        String query = String.format(Queries.GET_AUTHOR_BY_LOGIN, login);
+        String query = String.format(Queries.GET_AUTHOR_BY_LOGIN.getQuery(), login);
         try (ResultSet resultSet = select(query)) {
             return ResultSetUtils.mapToAuthor(resultSet);
         } catch (SQLException e) {
@@ -22,6 +22,6 @@ public class AuthorSteps extends BaseSteps {
         String name = author.getName();
         String login = author.getLogin();
         String email = author.getEmail();
-        return insert(Queries.ADD_AUTHOR, name, login, email);
+        return insert(Queries.ADD_AUTHOR.getQuery(), name, login, email);
     }
 }

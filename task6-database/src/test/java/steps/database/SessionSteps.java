@@ -8,6 +8,6 @@ public class SessionSteps extends BaseSteps {
     public Long addSession(SessionDao session) {
         String sessionKey = session.getSessionKey();
         Long buildNumber = session.getBuildNumber();
-        return insert(Queries.ADD_SESSION, sessionKey, buildNumber);
+        return insert(Queries.ADD_SESSION.getQuery(), sessionKey, buildNumber);
     }
 }
