@@ -2,9 +2,7 @@ package tests;
 
 import models.database.TestDao;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import steps.database.TestSteps;
 import utils.DatabaseUtils;
 import utils.RandomUtils;
@@ -23,7 +21,7 @@ public class DataProcessingTest {
     private final List<Long> newIds = new ArrayList<>();
     private TestDao test;
 
-    @BeforeTest
+    @BeforeMethod
     public void setup() {
         // Get list of tests from database
         int randomDigit = RandomUtils.getRandomInt(DIGIT_RANGE);
@@ -47,7 +45,7 @@ public class DataProcessingTest {
         }
     }
 
-    @AfterTest
+    @AfterMethod
     public void cleanup() {
         // Delete copied tests from database
         for (Long id : newIds) {

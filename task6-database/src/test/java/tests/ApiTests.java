@@ -1,5 +1,6 @@
 package tests;
 
+import config.EnvironmentConfig;
 import constants.Statuses;
 import models.database.TestDao;
 import org.testng.ITestResult;
@@ -29,10 +30,6 @@ public class ApiTests extends BaseTest {
     private static final int USER_ID = 5;
     private static final int TITLE_LENGTH = 10;
     private static final int BODY_LENGTH = 50;
-    private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
-    private static final Long SESSION_ID = SessionUtils.getSessionId();
-    private static final Long PROJECT_ID = SessionUtils.getProjectId();
-    private static final String ENV = System.getenv("COMPUTERNAME");
     private final PostsSteps postsSteps = new PostsSteps();
     private final UsersSteps usersSteps = new UsersSteps();
     private final TestSteps testSteps = new TestSteps();
@@ -121,12 +118,12 @@ public class ApiTests extends BaseTest {
                 .name(name)
                 .statusId(Statuses.fromInt(status).getStatusId())
                 .methodName(methodName)
-                .projectId(PROJECT_ID)
-                .sessionId(SESSION_ID)
+                .projectId(EnvironmentConfig.getProjectId())
+                .sessionId(EnvironmentConfig.getSessionId())
                 .startTime(startTime)
                 .endTime(endTime)
-                .env(ENV)
-                .authorId(AUTHOR_ID)
+                .env(EnvironmentConfig.getEnv())
+                .authorId(EnvironmentConfig.getAuthorId())
                 .build();
         testId = testSteps.addTest(test);
         test.setId(testId);
