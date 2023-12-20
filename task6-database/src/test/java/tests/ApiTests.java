@@ -1,5 +1,9 @@
-package tests.api;
+package tests;
 
+import constants.Statuses;
+import models.database.TestDao;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import steps.api.PostsSteps;
 import steps.api.UsersSteps;
 import constants.ApiResponsesPaths;
@@ -11,9 +15,10 @@ import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import utils.JsonMapperUtils;
-import utils.RandomUtils;
-import utils.ResponseUtils;
+import steps.database.TestSteps;
+import utils.*;
+
+import java.time.LocalDateTime;
 
 public class ApiTests extends BaseTest {
 
@@ -24,8 +29,16 @@ public class ApiTests extends BaseTest {
     private static final int USER_ID = 5;
     private static final int TITLE_LENGTH = 10;
     private static final int BODY_LENGTH = 50;
-    private final UsersSteps usersSteps = new UsersSteps();
+    private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
+    private static final Long SESSION_ID = SessionUtils.getSessionId();
+    private static final Long PROJECT_ID = SessionUtils.getProjectId();
+    private static final String ENV = System.getenv("COMPUTERNAME");
     private final PostsSteps postsSteps = new PostsSteps();
+    private final UsersSteps usersSteps = new UsersSteps();
+    private final TestSteps testSteps = new TestSteps();
+    private TestDao test;
+    private TestDao testFromDb;
+    private Long testId;
 
     @Test
     public void getPosts() {
@@ -91,5 +104,35 @@ public class ApiTests extends BaseTest {
         UserResponse actualUser = response.as(UserResponse.class);
         UserResponse expectedUser = JsonMapperUtils.deserialize(ApiResponsesPaths.USER_PATH, UserResponse.class);
         Assert.assertEquals(actualUser, expectedUser, "User data is not as expected");
+    }
+
+    @AfterMethod
+    public void afterTest(ITestResult result) {
+        // Get info from current test
+        int status = result.getStatus();
+        String name = result.getMethod().getMethodName();
+        String className = result.getTestClass().getName();
+        String methodName = String.format("%s.%s", TestUtils.getPackageName(className), name);
+        LocalDateTime startTime = LocalDateTime.now().withNano(0);
+        LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
+
+        // Create and add test to database
+        test = TestDao.builder()
+                .name(name)
+                .statusId(Statuses.fromInt(status).getStatusId())
+                .methodName(methodName)
+                .projectId(PROJECT_ID)
+                .sessionId(SESSION_ID)
+                .startTime(startTime)
+                .endTime(endTime)
+                .env(ENV)
+                .authorId(AUTHOR_ID)
+                .build();
+        testId = testSteps.addTest(test);
+        test.setId(testId);
+
+        // Assert test was added to database
+        testFromDb = testSteps.getTestById(testId);
+        Assert.assertEquals(test, testFromDb, "Test added to database is not correct");
     }
 }

@@ -1,9 +1,10 @@
-package tests.database;
+package tests;
 
 import models.database.TestDao;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import steps.database.TestSteps;
 import utils.DatabaseUtils;
 import utils.RandomUtils;
@@ -12,14 +13,15 @@ import utils.SessionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseTest {
+public class DataProcessingTest {
 
     private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
     private static final Long PROJECT_ID = SessionUtils.getProjectId();
     private static final int DIGIT_RANGE = 10;
     private static final int MAX_TESTS = 10;
     private final TestSteps testSteps = new TestSteps();
-    protected final List<Long> newIds = new ArrayList<>();
+    private final List<Long> newIds = new ArrayList<>();
+    private TestDao test;
 
     @BeforeTest
     public void setup() {
@@ -34,6 +36,17 @@ public class BaseTest {
         }
     }
 
+    @Test
+    public void simulateTests() {
+        for(Long id : newIds) {
+            test = testSteps.getTestById(id);
+            int newStatusId = RandomUtils.getRandomStatus();
+            test.setStatusId(newStatusId);
+            testSteps.updateTest(test);
+            Assert.assertEquals(newStatusId, testSteps.getTestById(id).getStatusId(), "Information was not updated");
+        }
+    }
+
     @AfterTest
     public void cleanup() {
         // Delete copied tests from database
@@ -41,7 +54,6 @@ public class BaseTest {
             testSteps.deleteTest(id);
             Assert.assertNull(testSteps.getTestById(id).getId(), "Test was not deleted");
         }
-
         DatabaseUtils.closeConnection();
     }
 }
