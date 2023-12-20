@@ -17,27 +17,22 @@ public abstract class BaseSteps {
         }
     }
 
-    protected Long insert(String sql, Object... params) {
-        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    protected ResultSet insert(String query, Object... params) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             for (int i = 0; i < params.length; i++) {
                 statement.setObject(i + 1, params[i]);
             }
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        return generatedKeys.getLong(1);
-                    }
-                }
-            }
+            statement.executeUpdate();
+            return statement.getGeneratedKeys();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new RuntimeException("Failed to retrieve inserted ID");
     }
 
-    protected void update(String sql, Object... params) {
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+    protected void update(String query, Object... params) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
             for (int i = 0; i < params.length; i++) {
                 statement.setObject(i + 1, params[i]);
             }
@@ -47,10 +42,10 @@ public abstract class BaseSteps {
         }
     }
 
-    protected void delete(String sql) {
+    protected void delete(String query) {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

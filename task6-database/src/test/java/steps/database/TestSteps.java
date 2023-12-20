@@ -46,7 +46,13 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        return insert(Queries.ADD_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+        try {
+            ResultSet resultSet = insert(Queries.ADD_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+            resultSet.next();
+            return resultSet.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void updateTest(TestDao test) {

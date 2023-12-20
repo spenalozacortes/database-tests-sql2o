@@ -22,6 +22,12 @@ public class AuthorSteps extends BaseSteps {
         String name = author.getName();
         String login = author.getLogin();
         String email = author.getEmail();
-        return insert(Queries.ADD_AUTHOR.getQuery(), name, login, email);
+        try {
+            ResultSet resultSet = insert(Queries.ADD_AUTHOR.getQuery(), name, login, email);
+            resultSet.next();
+            return resultSet.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -20,7 +20,12 @@ public class ProjectSteps extends BaseSteps {
 
     public Long addProject(ProjectDao project) {
         String name = project.getName();
-        String sql = String.format(Queries.ADD_PROJECT.getQuery(), name);
-        return insert(sql);
+        try {
+            ResultSet resultSet = insert(Queries.ADD_PROJECT.getQuery(), name);
+            resultSet.next();
+            return resultSet.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
