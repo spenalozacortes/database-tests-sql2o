@@ -30,7 +30,7 @@ public class DataProcessingTest {
             // Set current author and project
             test.setAuthorId(AUTHOR_ID);
             test.setProjectId(PROJECT_ID);
-            newIds.add(testSteps.addTest(test));
+            newIds.add(testSteps.insertTest(test));
         }
     }
 

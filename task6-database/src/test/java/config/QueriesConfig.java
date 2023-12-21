@@ -35,8 +35,8 @@ public class QueriesConfig {
         return CONFIG_READER.getValueByKey("getTests").getAsString();
     }
 
-    public static String getAddTest() {
-        return CONFIG_READER.getValueByKey("addTest").getAsString();
+    public static String getInsertTest() {
+        return CONFIG_READER.getValueByKey("insertTest").getAsString();
     }
 
     public static String getUpdateTest() {

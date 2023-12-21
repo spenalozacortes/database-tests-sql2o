@@ -14,4 +14,8 @@ public class EnvironmentConfig {
     public static String getEnv() {
         return System.getenv("COMPUTERNAME");
     }
+
+    public static String getBrowser() {
+        return CONFIG_READER.getValueByKey("browser").getAsString();
+    }
 }

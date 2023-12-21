@@ -120,16 +120,17 @@ public class ApiTests extends BaseTest {
                 .methodName(methodName)
                 .projectId(PROJECT_ID)
                 .sessionId(SESSION_ID)
-                .startTime(startTime)
-                .endTime(endTime)
+                .startTime(startTime.toString())
+                .endTime(endTime.toString())
                 .env(EnvironmentConfig.getEnv())
+                .browser(EnvironmentConfig.getBrowser())
                 .authorId(AUTHOR_ID)
                 .build();
-        Long testId = testSteps.addTest(test);
+        Long testId = testSteps.insertTest(test);
         test.setId(testId);
 
         // Assert test was added to database
         TestDao testFromDb = testSteps.getTestById(testId);
-        Assert.assertEquals(test, testFromDb, "Test added to database is not correct");
+        Assert.assertEquals(testFromDb, test, "Test added to database is not correct");
     }
 }

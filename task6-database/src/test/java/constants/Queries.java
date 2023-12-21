@@ -12,7 +12,7 @@ public enum Queries {
     INSERT_SESSION(QueriesConfig.getInsertSession()),
     GET_TEST_BY_ID(QueriesConfig.getTestById()),
     GET_TESTS(QueriesConfig.getTests()),
-    ADD_TEST(QueriesConfig.getAddTest()),
+    INSERT_TEST(QueriesConfig.getInsertTest()),
     UPDATE_TEST(QueriesConfig.getUpdateTest()),
     DELETE_TEST(QueriesConfig.getDeleteTest());
 
