@@ -20,4 +20,15 @@ public class ProjectSteps {
         ResultSet resultSet = DbUtils.insert(query);
         return ResultSetUtils.getIdFromResultSet(resultSet);
     }
+
+    public Long getProjectId(String projectName) {
+        ProjectDao project = getProjectByName(projectName);
+        // If project exists, get project id, else create and add project to database
+        if (project.getId() == null) {
+            project.setName(projectName);
+            return insertProject(project);
+        } else {
+            return project.getId();
+        }
+    }
 }

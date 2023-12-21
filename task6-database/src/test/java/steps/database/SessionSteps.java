@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 public class SessionSteps {
 
-    public Long addSession(SessionDao session) {
+    public Long insertSession(SessionDao session) {
         String query = Queries.INSERT_SESSION.getQuery(session.getSessionKey(), session.getBuildNumber());
         ResultSet resultSet = DbUtils.insert(query);
         return ResultSetUtils.getIdFromResultSet(resultSet);

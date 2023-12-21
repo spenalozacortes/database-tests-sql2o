@@ -20,4 +20,17 @@ public class AuthorSteps {
         ResultSet resultSet = DbUtils.insert(query);
         return ResultSetUtils.getIdFromResultSet(resultSet);
     }
+
+    public Long getAuthorId(String login, String authorName, String email) {
+        AuthorDao author = getAuthorByLogin(login);
+        // If author exists, get author id, else create and add author to database
+        if (author.getId() == null) {
+            author.setName(authorName);
+            author.setLogin(login);
+            author.setEmail(email);
+            return insertAuthor(author);
+        } else {
+            return author.getId();
+        }
+    }
 }
