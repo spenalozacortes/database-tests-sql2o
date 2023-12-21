@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @UtilityClass
-public class DatabaseUtils {
+public class DbConnector {
 
     private static final String URL = DatabaseConfig.getUrl();
     private static final String USER = DatabaseConfig.getUser();

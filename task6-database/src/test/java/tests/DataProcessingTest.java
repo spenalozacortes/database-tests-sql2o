@@ -4,7 +4,7 @@ import models.database.TestDao;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import steps.database.TestSteps;
-import utils.DatabaseUtils;
+import utils.DbConnector;
 import utils.RandomUtils;
 import utils.SessionUtils;
 
@@ -52,6 +52,6 @@ public class DataProcessingTest {
             testSteps.deleteTest(id);
             Assert.assertNull(testSteps.getTestById(id).getId(), "Test was not deleted");
         }
-        DatabaseUtils.closeConnection();
+        DbConnector.closeConnection();
     }
 }

@@ -1,12 +1,12 @@
 package steps.database;
 
-import utils.DatabaseUtils;
+import utils.DbConnector;
 
 import java.sql.*;
 
 public abstract class BaseSteps {
 
-    private final Connection connection = DatabaseUtils.getConnection();
+    private final Connection connection = DbConnector.getConnection();
 
     protected ResultSet select(String query) {
         try {
