@@ -8,7 +8,7 @@ public enum Queries {
     GET_AUTHOR_BY_LOGIN(QueriesConfig.getAuthorByLogin()),
     INSERT_AUTHOR(QueriesConfig.getInsertAuthor()),
     GET_PROJECT_BY_NAME(QueriesConfig.getProjectByName()),
-    ADD_PROJECT(QueriesConfig.getAddProject()),
+    INSERT_PROJECT(QueriesConfig.getInsertProject()),
     ADD_SESSION(QueriesConfig.getAddSession()),
     GET_TEST_BY_ID(QueriesConfig.getTestById()),
     GET_TESTS(QueriesConfig.getTests()),

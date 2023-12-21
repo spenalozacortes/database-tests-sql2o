@@ -19,8 +19,8 @@ public class QueriesConfig {
         return CONFIG_READER.getValueByKey("getProjectByName").getAsString();
     }
 
-    public static String getAddProject() {
-        return CONFIG_READER.getValueByKey("addProject").getAsString();
+    public static String getInsertProject() {
+        return CONFIG_READER.getValueByKey("insertProject").getAsString();
     }
 
     public static String getAddSession() {

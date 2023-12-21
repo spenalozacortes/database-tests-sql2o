@@ -49,7 +49,7 @@ public class SessionUtils {
         // If project exists, get project id, else create and add project to database
         if (project.getId() == null) {
             project.setName(PROJECT_NAME);
-            return projectSteps.addProject(project);
+            return projectSteps.insertProject(project);
         } else {
             return project.getId();
         }

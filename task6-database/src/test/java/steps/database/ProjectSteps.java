@@ -6,27 +6,18 @@ import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class ProjectSteps {
 
     public ProjectDao getProjectByName(String name) {
         String query = String.format(Queries.GET_PROJECT_BY_NAME.getQuery(), name);
-        try (ResultSet resultSet = DbUtils.select(query)) {
-            return ResultSetUtils.mapToProject(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        ResultSet resultSet = DbUtils.select(query);
+        return ResultSetUtils.mapToProject(resultSet);
     }
 
-    public Long addProject(ProjectDao project) {
-        String name = project.getName();
-        try {
-            ResultSet resultSet = DbUtils.insert(Queries.ADD_PROJECT.getQuery(), name);
-            resultSet.next();
-            return resultSet.getLong(1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public Long insertProject(ProjectDao project) {
+        String query = String.format(Queries.INSERT_PROJECT.getQuery(), project.getName());
+        ResultSet resultSet = DbUtils.insert(query);
+        return ResultSetUtils.getIdFromResultSet(resultSet);
     }
 }
