@@ -19,7 +19,9 @@ import org.testng.asserts.SoftAssert;
 import steps.database.TestSteps;
 import utils.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class ApiTests extends BaseTest {
 
@@ -108,10 +110,9 @@ public class ApiTests extends BaseTest {
         // Get info from current test
         int status = result.getStatus();
         String name = result.getMethod().getMethodName();
-        String className = result.getTestClass().getName();
-        String methodName = String.format("%s.%s", TestUtils.getPackageName(className), name);
-        LocalDateTime startTime = LocalDateTime.now().withNano(0);
-        LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
+        String methodName = result.getInstanceName();
+        LocalDateTime startTime = new Timestamp(result.getStartMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
+        LocalDateTime endTime = new Timestamp(result.getEndMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
 
         // Create and add test to database
         TestDao test = TestDao.builder()
