@@ -1,5 +1,6 @@
 package utils;
 
+import constants.TableFields;
 import lombok.experimental.UtilityClass;
 import models.database.AuthorDao;
 import models.database.ProjectDao;
@@ -14,16 +15,14 @@ public class ResultSetUtils {
 
     public static AuthorDao mapToAuthor(ResultSet resultSet) {
         try {
+            AuthorDao author = new AuthorDao();
             if (resultSet.next()) {
-                return new AuthorDao(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("login"),
-                        resultSet.getString("email")
-                );
-            } else {
-                return new AuthorDao();
+                author.setId(resultSet.getLong(TableFields.ID));
+                author.setName(resultSet.getString(TableFields.NAME));
+                author.setLogin(resultSet.getString(TableFields.LOGIN));
+                author.setEmail(resultSet.getString(TableFields.EMAIL));
             }
+            return author;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -31,14 +30,12 @@ public class ResultSetUtils {
 
     public static ProjectDao mapToProject(ResultSet resultSet) {
         try {
+            ProjectDao project = new ProjectDao();
             if (resultSet.next()) {
-                return new ProjectDao(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name")
-                );
-            } else {
-                return new ProjectDao();
+                project.setId(resultSet.getLong(TableFields.ID));
+                project.setName(resultSet.getString(TableFields.NAME));
             }
+            return project;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -48,17 +45,17 @@ public class ResultSetUtils {
         try {
             if (resultSet.next()) {
                 return TestDao.builder()
-                        .id(resultSet.getLong("id"))
-                        .name(resultSet.getString("name"))
-                        .statusId(resultSet.getInt("status_id"))
-                        .methodName(resultSet.getString("method_name"))
-                        .projectId(resultSet.getLong("project_id"))
-                        .sessionId(resultSet.getLong("session_id"))
-                        .startTime(resultSet.getObject("start_time", LocalDateTime.class))
-                        .endTime(resultSet.getObject("end_time", LocalDateTime.class))
-                        .env(resultSet.getString("env"))
-                        .browser(resultSet.getString("browser"))
-                        .authorId(resultSet.getLong("author_id"))
+                        .id(resultSet.getLong(TableFields.ID))
+                        .name(resultSet.getString(TableFields.NAME))
+                        .statusId(resultSet.getInt(TableFields.STATUS_ID))
+                        .methodName(resultSet.getString(TableFields.METHOD_NAME))
+                        .projectId(resultSet.getLong(TableFields.PROJECT_ID))
+                        .sessionId(resultSet.getLong(TableFields.SESSION_ID))
+                        .startTime(resultSet.getObject(TableFields.START_TIME, LocalDateTime.class))
+                        .endTime(resultSet.getObject(TableFields.END_TIME, LocalDateTime.class))
+                        .env(resultSet.getString(TableFields.ENV))
+                        .browser(resultSet.getString(TableFields.BROWSER))
+                        .authorId(resultSet.getLong(TableFields.AUTHOR_ID))
                         .build();
             } else {
                 return new TestDao();
