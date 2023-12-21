@@ -30,6 +30,9 @@ public class ApiTests extends BaseTest {
     private static final int USER_ID = 5;
     private static final int TITLE_LENGTH = 10;
     private static final int BODY_LENGTH = 50;
+    private static final Long AUTHOR_ID = SessionUtils.getAuthorId();
+    private static final Long SESSION_ID = SessionUtils.getSessionId();
+    private static final Long PROJECT_ID = SessionUtils.getProjectId();
     private final PostsSteps postsSteps = new PostsSteps();
     private final UsersSteps usersSteps = new UsersSteps();
     private final TestSteps testSteps = new TestSteps();
@@ -118,12 +121,12 @@ public class ApiTests extends BaseTest {
                 .name(name)
                 .statusId(Statuses.fromInt(status).getStatusId())
                 .methodName(methodName)
-                .projectId(EnvironmentConfig.getProjectId())
-                .sessionId(EnvironmentConfig.getSessionId())
+                .projectId(PROJECT_ID)
+                .sessionId(SESSION_ID)
                 .startTime(startTime)
                 .endTime(endTime)
                 .env(EnvironmentConfig.getEnv())
-                .authorId(EnvironmentConfig.getAuthorId())
+                .authorId(AUTHOR_ID)
                 .build();
         testId = testSteps.addTest(test);
         test.setId(testId);

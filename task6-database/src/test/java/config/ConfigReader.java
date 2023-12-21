@@ -8,17 +8,17 @@ import java.io.FileReader;
 
 public class ConfigReader {
 
-    private final JsonObject environment;
+    private final JsonObject jsonObject;
 
     public ConfigReader(String path) {
         try (FileReader reader = new FileReader(path)) {
-            environment = JsonParser.parseReader(reader).getAsJsonObject();
+            jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public JsonElement getValueByKey(String key) {
-        return environment.get(key);
+        return jsonObject.get(key);
     }
 }
