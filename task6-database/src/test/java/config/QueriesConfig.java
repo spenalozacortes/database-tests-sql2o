@@ -23,8 +23,8 @@ public class QueriesConfig {
         return CONFIG_READER.getValueByKey("insertProject").getAsString();
     }
 
-    public static String getAddSession() {
-        return CONFIG_READER.getValueByKey("addSession").getAsString();
+    public static String getInsertSession() {
+        return CONFIG_READER.getValueByKey("insertSession").getAsString();
     }
 
     public static String getTestById() {
