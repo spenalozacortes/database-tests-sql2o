@@ -1,18 +1,16 @@
 package constants;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum Statuses {
     PASSED(1),
     FAILED(2),
     SKIPPED(3);
 
     private final int statusId;
-
-    Statuses(int statusId) {
-        this.statusId = statusId;
-    }
 
     public static Statuses fromInt(int status) {
         switch (status) {

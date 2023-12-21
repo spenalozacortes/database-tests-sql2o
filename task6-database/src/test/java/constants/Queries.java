@@ -2,8 +2,10 @@ package constants;
 
 import config.QueriesConfig;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum Queries {
     GET_AUTHOR_BY_LOGIN(QueriesConfig.getAuthorByLogin()),
     INSERT_AUTHOR(QueriesConfig.getInsertAuthor()),
@@ -18,7 +20,7 @@ public enum Queries {
 
     private final String query;
 
-    Queries(String query) {
-        this.query = query;
+    public String getQuery(Object... varargs) {
+        return String.format(this.query, varargs);
     }
 }
