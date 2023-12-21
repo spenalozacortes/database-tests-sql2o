@@ -2,16 +2,17 @@ package steps.database;
 
 import constants.Queries;
 import models.database.AuthorDao;
+import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthorSteps extends BaseSteps {
+public class AuthorSteps {
 
     public AuthorDao getAuthorByLogin(String login) {
         String query = String.format(Queries.GET_AUTHOR_BY_LOGIN.getQuery(), login);
-        try (ResultSet resultSet = select(query)) {
+        try (ResultSet resultSet = DbUtils.select(query)) {
             return ResultSetUtils.mapToAuthor(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -23,7 +24,7 @@ public class AuthorSteps extends BaseSteps {
         String login = author.getLogin();
         String email = author.getEmail();
         try {
-            ResultSet resultSet = insert(Queries.ADD_AUTHOR.getQuery(), name, login, email);
+            ResultSet resultSet = DbUtils.insert(Queries.ADD_AUTHOR.getQuery(), name, login, email);
             resultSet.next();
             return resultSet.getLong(1);
         } catch (SQLException e) {

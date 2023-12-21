@@ -1,14 +1,15 @@
-package steps.database;
+package utils;
 
-import utils.DbConnector;
+import lombok.experimental.UtilityClass;
 
 import java.sql.*;
 
-public abstract class BaseSteps {
+@UtilityClass
+public class DbUtils {
 
     private final Connection connection = DbConnector.getConnection();
 
-    protected ResultSet select(String query) {
+    public static ResultSet select(String query) {
         try {
             Statement statement = connection.createStatement();
             return statement.executeQuery(query);
@@ -17,7 +18,7 @@ public abstract class BaseSteps {
         }
     }
 
-    protected ResultSet insert(String query, Object... params) {
+    public static ResultSet insert(String query, Object... params) {
         try {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             for (int i = 0; i < params.length; i++) {
@@ -30,7 +31,7 @@ public abstract class BaseSteps {
         }
     }
 
-    protected void update(String query, Object... params) {
+    public static void update(String query, Object... params) {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             for (int i = 0; i < params.length; i++) {
@@ -42,7 +43,7 @@ public abstract class BaseSteps {
         }
     }
 
-    protected void delete(String query) {
+    public static void delete(String query) {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);

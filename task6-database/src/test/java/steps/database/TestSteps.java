@@ -2,6 +2,7 @@ package steps.database;
 
 import constants.Queries;
 import models.database.TestDao;
+import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
@@ -10,11 +11,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestSteps extends BaseSteps {
+public class TestSteps {
 
     public TestDao getTestById(Long id) {
         String query = String.format(Queries.GET_TEST_BY_ID.getQuery(), id);
-        try (ResultSet resultSet = select(query)) {
+        try (ResultSet resultSet = DbUtils.select(query)) {
             return ResultSetUtils.mapToTest(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -24,7 +25,7 @@ public class TestSteps extends BaseSteps {
     public List<TestDao> getTests(String digits, int limit) {
         List<TestDao> tests = new ArrayList<>();
         String query = String.format(Queries.GET_TESTS.getQuery(), digits, limit);
-        try (ResultSet resultSet = select(query)) {
+        try (ResultSet resultSet = DbUtils.select(query)) {
             while (resultSet.next()) {
                 tests.add(ResultSetUtils.mapToTest(resultSet));
             }
@@ -47,7 +48,7 @@ public class TestSteps extends BaseSteps {
         Long authorId = test.getAuthorId();
 
         try {
-            ResultSet resultSet = insert(Queries.ADD_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
+            ResultSet resultSet = DbUtils.insert(Queries.ADD_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId);
             resultSet.next();
             return resultSet.getLong(1);
         } catch (SQLException e) {
@@ -68,11 +69,11 @@ public class TestSteps extends BaseSteps {
         String browser = test.getBrowser();
         Long authorId = test.getAuthorId();
 
-        update(Queries.UPDATE_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
+        DbUtils.update(Queries.UPDATE_TEST.getQuery(), name, statusId, methodName, projectId, sessionId, startTime, endTime, env, browser, authorId, id);
     }
 
     public void deleteTest(Long id) {
         String query = String.format(Queries.DELETE_TEST.getQuery(), id);
-        delete(query);
+        DbUtils.delete(query);
     }
 }
