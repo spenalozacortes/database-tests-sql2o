@@ -38,7 +38,7 @@ public class SessionUtils {
             author.setName(AUTHOR_NAME);
             author.setLogin(LOGIN);
             author.setEmail(EMAIL);
-            return authorSteps.addAuthor(author);
+            return authorSteps.insertAuthor(author);
         } else {
             return author.getId();
         }

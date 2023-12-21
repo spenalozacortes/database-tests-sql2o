@@ -11,8 +11,8 @@ public class QueriesConfig {
         return CONFIG_READER.getValueByKey("getAuthorByLogin").getAsString();
     }
 
-    public static String getAddAuthor() {
-        return CONFIG_READER.getValueByKey("addAuthor").getAsString();
+    public static String getInsertAuthor() {
+        return CONFIG_READER.getValueByKey("insertAuthor").getAsString();
     }
 
     public static String getProjectByName() {

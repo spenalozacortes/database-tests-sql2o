@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public enum Queries {
     GET_AUTHOR_BY_LOGIN(QueriesConfig.getAuthorByLogin()),
-    ADD_AUTHOR(QueriesConfig.getAddAuthor()),
+    INSERT_AUTHOR(QueriesConfig.getInsertAuthor()),
     GET_PROJECT_BY_NAME(QueriesConfig.getProjectByName()),
     ADD_PROJECT(QueriesConfig.getAddProject()),
     ADD_SESSION(QueriesConfig.getAddSession()),

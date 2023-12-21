@@ -1,6 +1,6 @@
 {
   "getAuthorByLogin": "SELECT * FROM author WHERE login = '%s'",
-  "addAuthor": "INSERT INTO author (name, login, email) VALUES (?, ?, ?)",
+  "insertAuthor": "INSERT INTO author (name, login, email) VALUES ('%s', '%s', '%s')",
   "getProjectByName": "SELECT * FROM project WHERE name = '%s'",
   "addProject": "INSERT INTO project (name) VALUES ('%s')",
   "addSession": "INSERT INTO session (session_key, build_number) VALUES (?, ?)",

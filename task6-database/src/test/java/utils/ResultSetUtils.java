@@ -64,4 +64,13 @@ public class ResultSetUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public static Long getIdFromResultSet(ResultSet resultSet) {
+        try {
+            resultSet.next();
+            return resultSet.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
