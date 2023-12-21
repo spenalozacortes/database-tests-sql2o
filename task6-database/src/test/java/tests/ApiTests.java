@@ -36,9 +36,6 @@ public class ApiTests extends BaseTest {
     private final PostsSteps postsSteps = new PostsSteps();
     private final UsersSteps usersSteps = new UsersSteps();
     private final TestSteps testSteps = new TestSteps();
-    private TestDao test;
-    private TestDao testFromDb;
-    private Long testId;
 
     @Test
     public void getPosts() {
@@ -117,7 +114,7 @@ public class ApiTests extends BaseTest {
         LocalDateTime endTime = startTime.plus(TestUtils.getTestDuration(result)).withNano(0);
 
         // Create and add test to database
-        test = TestDao.builder()
+        TestDao test = TestDao.builder()
                 .name(name)
                 .statusId(Statuses.fromInt(status).getStatusId())
                 .methodName(methodName)
@@ -128,11 +125,11 @@ public class ApiTests extends BaseTest {
                 .env(EnvironmentConfig.getEnv())
                 .authorId(AUTHOR_ID)
                 .build();
-        testId = testSteps.addTest(test);
+        Long testId = testSteps.addTest(test);
         test.setId(testId);
 
         // Assert test was added to database
-        testFromDb = testSteps.getTestById(testId);
+        TestDao testFromDb = testSteps.getTestById(testId);
         Assert.assertEquals(test, testFromDb, "Test added to database is not correct");
     }
 }
