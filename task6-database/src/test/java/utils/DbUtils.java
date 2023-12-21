@@ -18,12 +18,9 @@ public class DbUtils {
         }
     }
 
-    public static ResultSet insert(String query, Object... params) {
+    public static ResultSet insert(String query) {
         try {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            for (int i = 0; i < params.length; i++) {
-                statement.setObject(i + 1, params[i]);
-            }
             statement.executeUpdate();
             return statement.getGeneratedKeys();
         } catch (SQLException e) {
@@ -31,12 +28,9 @@ public class DbUtils {
         }
     }
 
-    public static void update(String query, Object... params) {
+    public static void update(String query) {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            for (int i = 0; i < params.length; i++) {
-                statement.setObject(i + 1, params[i]);
-            }
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
