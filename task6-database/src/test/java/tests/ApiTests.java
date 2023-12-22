@@ -105,18 +105,14 @@ public class ApiTests extends BaseTest {
 
     @AfterMethod
     public void afterTest(ITestResult result) {
-        // Get info from current test
-        int status = result.getStatus();
-        String name = result.getMethod().getMethodName();
-        String methodName = result.getInstanceName();
         LocalDateTime startTime = new Timestamp(result.getStartMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime endTime = new Timestamp(result.getEndMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
 
         // Create and add test to database
         TestDao test = TestDao.builder()
-                .name(name)
-                .statusId(status)
-                .methodName(methodName)
+                .name(result.getMethod().getMethodName())
+                .statusId(result.getStatus())
+                .methodName(result.getInstanceName())
                 .projectId(projectId)
                 .sessionId(sessionId)
                 .startTime(startTime.toString())
