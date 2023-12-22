@@ -34,7 +34,7 @@ public class DataProcessingTest extends BaseTest {
 
     @Test
     public void simulateTests() {
-        for(Long id : newIds) {
+        for (Long id : newIds) {
             TestDao test = testSteps.getTestById(id);
             int newStatusId = RandomUtils.getRandomStatus();
             test.setStatusId(newStatusId);
