@@ -1,6 +1,8 @@
 package tests;
 
-import config.TestDataConfig;
+import data.AuthorGenerator;
+import data.ProjectGenerator;
+import data.SessionGenerator;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -11,18 +13,12 @@ import org.testng.annotations.BeforeTest;
 import steps.database.AuthorSteps;
 import steps.database.ProjectSteps;
 import steps.database.SessionSteps;
-import utils.RandomUtils;
 
 public abstract class BaseTest {
 
-    private static final Long BUILD_NUMBER = TestDataConfig.getBuildNumber();
-    private static final String AUTHOR_NAME = TestDataConfig.getAuthorName();
-    private static final String LOGIN = TestDataConfig.getAuthorLogin();
-    private static final String EMAIL = TestDataConfig.getAuthorEmail();
-    private static final String PROJECT_NAME = TestDataConfig.getProjectName();
-    private final SessionDao session = new SessionDao();
-    private final AuthorDao author = new AuthorDao();
-    private final ProjectDao project = new ProjectDao();
+    private final SessionDao session = SessionGenerator.generateSession();
+    private final AuthorDao author = AuthorGenerator.generateAuthor();
+    private final ProjectDao project = ProjectGenerator.generateProject();
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
     private final ProjectSteps projectSteps = new ProjectSteps();
@@ -34,16 +30,8 @@ public abstract class BaseTest {
     public void setup() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
-        session.setSessionKey(RandomUtils.generateSessionId());
-        session.setBuildNumber(BUILD_NUMBER);
         sessionId = sessionSteps.insertSession(session);
-
-        author.setName(AUTHOR_NAME);
-        author.setLogin(LOGIN);
-        author.setEmail(EMAIL);
         authorId = authorSteps.insertAuthorIfAbsent(author);
-
-        project.setName(PROJECT_NAME);
         projectId = projectSteps.insertProjectIfAbsent(project);
     }
 }
