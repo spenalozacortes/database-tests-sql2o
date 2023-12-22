@@ -4,6 +4,8 @@ import config.TestDataConfig;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import models.database.AuthorDao;
+import models.database.ProjectDao;
 import models.database.SessionDao;
 import org.testng.annotations.BeforeTest;
 import steps.database.AuthorSteps;
@@ -19,6 +21,8 @@ public abstract class BaseTest {
     private static final String EMAIL = TestDataConfig.getAuthorEmail();
     private static final String PROJECT_NAME = TestDataConfig.getProjectName();
     private final SessionDao session = new SessionDao();
+    private final AuthorDao author = new AuthorDao();
+    private final ProjectDao project = new ProjectDao();
     private final SessionSteps sessionSteps = new SessionSteps();
     private final AuthorSteps authorSteps = new AuthorSteps();
     private final ProjectSteps projectSteps = new ProjectSteps();
@@ -34,8 +38,12 @@ public abstract class BaseTest {
         session.setBuildNumber(BUILD_NUMBER);
         sessionId = sessionSteps.insertSession(session);
 
-        authorId = authorSteps.getAuthorId(LOGIN, AUTHOR_NAME, EMAIL);
+        author.setName(AUTHOR_NAME);
+        author.setLogin(LOGIN);
+        author.setEmail(EMAIL);
+        authorId = authorSteps.insertAuthorIfAbsent(author);
 
-        projectId = projectSteps.getProjectId(PROJECT_NAME);
+        project.setName(PROJECT_NAME);
+        projectId = projectSteps.insertProjectIfAbsent(project);
     }
 }

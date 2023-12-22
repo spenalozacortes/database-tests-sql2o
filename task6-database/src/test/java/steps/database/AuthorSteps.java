@@ -21,16 +21,11 @@ public class AuthorSteps {
         return ResultSetUtils.getIdFromResultSet(resultSet);
     }
 
-    public Long getAuthorId(String login, String authorName, String email) {
-        AuthorDao author = getAuthorByLogin(login);
-        // If author exists, get author id, else create and add author to database
-        if (author.getId() == null) {
-            author.setName(authorName);
-            author.setLogin(login);
-            author.setEmail(email);
+    public Long insertAuthorIfAbsent(AuthorDao author) {
+        AuthorDao authorDao = getAuthorByLogin(author.getLogin());
+        if (authorDao.getId() == null) {
             return insertAuthor(author);
-        } else {
-            return author.getId();
         }
+        return authorDao.getId();
     }
 }
