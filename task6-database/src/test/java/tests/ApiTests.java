@@ -1,23 +1,24 @@
 package tests;
 
 import config.EnvironmentConfig;
-import constants.Statuses;
-import models.database.TestDao;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import steps.api.PostsSteps;
-import steps.api.UsersSteps;
 import constants.ApiResponsesPaths;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.api.PostResponse;
 import models.api.UserResponse;
+import models.database.TestDao;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import steps.api.PostsSteps;
+import steps.api.UsersSteps;
 import steps.database.TestSteps;
-import utils.*;
+import utils.JsonMapperUtils;
+import utils.RandomUtils;
+import utils.ResponseUtils;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -114,7 +115,7 @@ public class ApiTests extends BaseTest {
         // Create and add test to database
         TestDao test = TestDao.builder()
                 .name(name)
-                .statusId(Statuses.fromInt(status).getStatusId())
+                .statusId(status)
                 .methodName(methodName)
                 .projectId(projectId)
                 .sessionId(sessionId)
