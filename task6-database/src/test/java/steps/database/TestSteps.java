@@ -6,8 +6,6 @@ import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestSteps {
@@ -21,15 +19,7 @@ public class TestSteps {
     public List<TestDao> getTests(String digits, int limit) {
         String query = Queries.GET_TESTS.getQuery(digits, limit);
         ResultSet resultSet = DbUtils.select(query);
-        List<TestDao> tests = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
-                tests.add(ResultSetUtils.mapToTest(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return tests;
+        return ResultSetUtils.getListOfTestsFromResultSet(resultSet);
     }
 
     public Long insertTest(TestDao test) {

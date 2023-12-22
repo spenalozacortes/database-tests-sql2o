@@ -9,6 +9,8 @@ import models.database.TestDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @UtilityClass
 public class ResultSetUtils {
@@ -72,5 +74,17 @@ public class ResultSetUtils {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static List<TestDao> getListOfTestsFromResultSet(ResultSet resultSet) {
+        List<TestDao> list = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                list.add(mapToTest(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 }
