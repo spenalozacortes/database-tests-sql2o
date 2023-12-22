@@ -28,19 +28,19 @@ public class DbUtils {
         }
     }
 
-    public static void update(String query) {
+    public static int update(String query) {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
+            return statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void delete(String query) {
+    public static int delete(String query) {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
+            return statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
