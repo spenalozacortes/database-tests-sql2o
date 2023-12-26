@@ -113,13 +113,13 @@ public class ApiTests extends BaseTest {
                 .name(result.getMethod().getMethodName())
                 .statusId(result.getStatus())
                 .methodName(result.getInstanceName())
-                .projectId(projectId)
-                .sessionId(sessionId)
+                .projectId(PROJECT.getId())
+                .sessionId(SESSION.getId())
                 .startTime(startTime.toString())
                 .endTime(endTime.toString())
                 .env(EnvironmentConfig.getEnv())
                 .browser(EnvironmentConfig.getBrowser())
-                .authorId(authorId)
+                .authorId(AUTHOR.getId())
                 .build();
         Long testId = testSteps.insertTest(test);
         test.setId(testId);

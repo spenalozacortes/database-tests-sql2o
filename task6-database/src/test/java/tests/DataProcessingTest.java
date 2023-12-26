@@ -26,8 +26,8 @@ public class DataProcessingTest extends BaseTest {
         List<TestDao> tests = testSteps.getTests(String.format("%d%d", randomDigit, randomDigit), MAX_TESTS);
         for (TestDao test : tests) {
             // Set current author and project
-            test.setAuthorId(authorId);
-            test.setProjectId(projectId);
+            test.setAuthorId(AUTHOR.getId());
+            test.setProjectId(PROJECT.getId());
             newIds.add(testSteps.insertTest(test));
         }
     }
