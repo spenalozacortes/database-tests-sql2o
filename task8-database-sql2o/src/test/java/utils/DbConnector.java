@@ -2,10 +2,8 @@ package utils;
 
 import config.DatabaseConfig;
 import lombok.experimental.UtilityClass;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.sql2o.Connection;
+import org.sql2o.Sql2o;
 
 @UtilityClass
 public class DbConnector {
@@ -17,22 +15,15 @@ public class DbConnector {
 
     public static Connection getConnection() {
         if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                return connection;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            Sql2o sql2o = new Sql2o(URL, USER, PASSWORD);
+            connection = sql2o.open();
+            return connection;
         }
         return connection;
     }
 
     public static void closeConnection() {
-        try {
-            connection.close();
-            connection = null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        connection.close();
+        connection = null;
     }
 }

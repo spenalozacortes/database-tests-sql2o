@@ -1,8 +1,7 @@
 package utils;
 
 import lombok.experimental.UtilityClass;
-
-import java.sql.*;
+import org.sql2o.Connection;
 
 @UtilityClass
 public class DbUtils {
