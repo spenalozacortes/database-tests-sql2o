@@ -1,5 +1,6 @@
 package steps.database;
 
+import constants.DbParameters;
 import constants.Queries;
 import models.database.SessionDao;
 import org.sql2o.Connection;
@@ -14,8 +15,8 @@ public class SessionSteps {
     public Long insertSession(SessionDao session) {
         String query = Queries.INSERT_SESSION.getQuery();
         BigInteger id = (BigInteger) connection.createQuery(query, true)
-                .addParameter("sessionKey", session.getSessionKey())
-                .addParameter("buildNumber", session.getBuildNumber())
+                .addParameter(DbParameters.SESSION_KEY, session.getSessionKey())
+                .addParameter(DbParameters.BUILD_NUMBER, session.getBuildNumber())
                 .executeUpdate()
                 .getKey();
         return id.longValue();

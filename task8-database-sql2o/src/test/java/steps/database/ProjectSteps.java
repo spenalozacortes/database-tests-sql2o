@@ -1,5 +1,6 @@
 package steps.database;
 
+import constants.DbParameters;
 import constants.Queries;
 import models.database.ProjectDao;
 import org.sql2o.Connection;
@@ -15,7 +16,7 @@ public class ProjectSteps {
     public ProjectDao getProjectByName(String name) {
         String query = Queries.GET_PROJECT_BY_NAME.getQuery();
         List<ProjectDao> projects = connection.createQuery(query)
-                .addParameter("name", name)
+                .addParameter(DbParameters.NAME, name)
                 .executeAndFetch(ProjectDao.class);
         return projects.isEmpty() ? null : projects.get(0);
     }
@@ -23,7 +24,7 @@ public class ProjectSteps {
     public Long insertProject(ProjectDao project) {
         String query = Queries.INSERT_PROJECT.getQuery();
         BigInteger id = (BigInteger) connection.createQuery(query, true)
-                .addParameter("name", project.getName())
+                .addParameter(DbParameters.NAME, project.getName())
                 .executeUpdate()
                 .getKey();
         return id.longValue();
