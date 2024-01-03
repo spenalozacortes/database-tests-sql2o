@@ -24,13 +24,8 @@ public class DbUtils {
         }
     }
 
-    public static int update(String query) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            return statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static void update(String query) {
+        connection.createQuery(query).executeUpdate();
     }
 
     public static int delete(String query) {
