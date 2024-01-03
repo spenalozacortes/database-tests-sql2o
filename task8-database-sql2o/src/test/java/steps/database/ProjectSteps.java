@@ -6,13 +6,14 @@ import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 public class ProjectSteps {
 
     public ProjectDao getProjectByName(String name) {
         String query = Queries.GET_PROJECT_BY_NAME.getQuery(name);
-        ResultSet resultSet = DbUtils.select(query);
-        return ResultSetUtils.mapToProject(resultSet);
+        List<ProjectDao> projects = DbUtils.select(query, ProjectDao.class);
+        return projects.get(0);
     }
 
     public Long insertProject(ProjectDao project) {

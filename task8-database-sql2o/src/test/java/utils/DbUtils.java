@@ -3,18 +3,15 @@ package utils;
 import lombok.experimental.UtilityClass;
 import org.sql2o.Connection;
 
+import java.util.List;
+
 @UtilityClass
 public class DbUtils {
 
     private final Connection connection = DbConnector.getConnection();
 
-    public static ResultSet select(String query) {
-        try {
-            Statement statement = connection.createStatement();
-            return statement.executeQuery(query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static <T> List<T> select(String query, Class<T> model) {
+        return connection.createQuery(query).executeAndFetch(model);
     }
 
     public static ResultSet insert(String query) {

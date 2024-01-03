@@ -6,13 +6,14 @@ import utils.DbUtils;
 import utils.ResultSetUtils;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 public class AuthorSteps {
 
     public AuthorDao getAuthorByLogin(String login) {
         String query = Queries.GET_AUTHOR_BY_LOGIN.getQuery(login);
-        ResultSet resultSet = DbUtils.select(query);
-        return ResultSetUtils.mapToAuthor(resultSet);
+        List<AuthorDao> authors = DbUtils.select(query, AuthorDao.class);
+        return authors.get(0);
     }
 
     public Long insertAuthor(AuthorDao author) {

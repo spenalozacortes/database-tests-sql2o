@@ -12,14 +12,13 @@ public class TestSteps {
 
     public TestDao getTestById(Long id) {
         String query = Queries.GET_TEST_BY_ID.getQuery(id);
-        ResultSet resultSet = DbUtils.select(query);
-        return ResultSetUtils.mapToTest(resultSet);
+        List<TestDao> tests = DbUtils.select(query, TestDao.class);
+        return tests.get(0);
     }
 
     public List<TestDao> getTests(String digits, int limit) {
         String query = Queries.GET_TESTS.getQuery(digits, limit);
-        ResultSet resultSet = DbUtils.select(query);
-        return ResultSetUtils.getListOfTestsFromResultSet(resultSet);
+        return DbUtils.select(query, TestDao.class);
     }
 
     public Long insertTest(TestDao test) {
