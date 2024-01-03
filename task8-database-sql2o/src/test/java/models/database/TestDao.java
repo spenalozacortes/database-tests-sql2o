@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,8 +18,8 @@ public class TestDao {
     private String methodName;
     private Long projectId;
     private Long sessionId;
-    private String startTime;
-    private String endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private String env;
     private String browser;
     private Long authorId;

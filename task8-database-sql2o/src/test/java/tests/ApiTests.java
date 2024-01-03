@@ -21,7 +21,6 @@ import utils.RandomUtils;
 import utils.ResponseUtils;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class ApiTests extends BaseTest {
@@ -105,8 +104,8 @@ public class ApiTests extends BaseTest {
 
     @AfterMethod
     public void afterTest(ITestResult result) {
-        LocalDateTime startTime = new Timestamp(result.getStartMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
-        LocalDateTime endTime = new Timestamp(result.getEndMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS);
+        Timestamp startTime = Timestamp.valueOf(new Timestamp(result.getStartMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS));
+        Timestamp endTime = Timestamp.valueOf(new Timestamp(result.getEndMillis()).toLocalDateTime().truncatedTo(ChronoUnit.SECONDS));
 
         // Create and add test to database
         TestDao test = TestDao.builder()
@@ -115,8 +114,8 @@ public class ApiTests extends BaseTest {
                 .methodName(result.getInstanceName())
                 .projectId(PROJECT.getId())
                 .sessionId(SESSION.getId())
-                .startTime(startTime.toString())
-                .endTime(endTime.toString())
+                .startTime(startTime)
+                .endTime(endTime)
                 .env(EnvironmentConfig.getEnv())
                 .browser(EnvironmentConfig.getBrowser())
                 .authorId(AUTHOR.getId())

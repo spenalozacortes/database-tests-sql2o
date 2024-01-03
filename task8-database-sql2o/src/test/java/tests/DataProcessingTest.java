@@ -48,7 +48,7 @@ public class DataProcessingTest extends BaseTest {
         // Delete copied tests from database
         for (Long id : newIds) {
             testSteps.deleteTest(id);
-            Assert.assertNull(testSteps.getTestById(id).getId(), "Test was not deleted");
+            Assert.assertNull(testSteps.getTestById(id), "Test was not deleted");
         }
         DbConnector.closeConnection();
     }

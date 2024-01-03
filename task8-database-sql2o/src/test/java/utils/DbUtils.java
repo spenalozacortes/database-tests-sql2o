@@ -3,6 +3,7 @@ package utils;
 import lombok.experimental.UtilityClass;
 import org.sql2o.Connection;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @UtilityClass
@@ -16,9 +17,10 @@ public class DbUtils {
     }
 
     public static Long insert(String query) {
-        return (Long) connection.createQuery(query, true)
+        BigInteger id = (BigInteger) connection.createQuery(query, true)
                 .executeUpdate()
                 .getKey();
+        return id.longValue();
     }
 
     public static void update(String query) {

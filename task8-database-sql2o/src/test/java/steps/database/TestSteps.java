@@ -11,7 +11,7 @@ public class TestSteps {
     public TestDao getTestById(Long id) {
         String query = Queries.GET_TEST_BY_ID.getQuery(id);
         List<TestDao> tests = DbUtils.select(query, TestDao.class);
-        return tests.get(0);
+        return tests.isEmpty() ? null : tests.get(0);
     }
 
     public List<TestDao> getTests(String digits, int limit) {
