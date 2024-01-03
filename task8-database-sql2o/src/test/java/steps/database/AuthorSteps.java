@@ -3,9 +3,7 @@ package steps.database;
 import constants.Queries;
 import models.database.AuthorDao;
 import utils.DbUtils;
-import utils.ResultSetUtils;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 public class AuthorSteps {
@@ -18,8 +16,7 @@ public class AuthorSteps {
 
     public Long insertAuthor(AuthorDao author) {
         String query = Queries.INSERT_AUTHOR.getQuery(author.getName(), author.getLogin(), author.getEmail());
-        ResultSet resultSet = DbUtils.insert(query);
-        return ResultSetUtils.getIdFromResultSet(resultSet);
+        return DbUtils.insert(query);
     }
 
     public Long insertAuthorIfAbsent(AuthorDao author) {

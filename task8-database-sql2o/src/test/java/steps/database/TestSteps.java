@@ -3,9 +3,7 @@ package steps.database;
 import constants.Queries;
 import models.database.TestDao;
 import utils.DbUtils;
-import utils.ResultSetUtils;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 public class TestSteps {
@@ -23,8 +21,7 @@ public class TestSteps {
 
     public Long insertTest(TestDao test) {
         String query = Queries.INSERT_TEST.getQuery(test.getName(), test.getStatusId(), test.getMethodName(), test.getProjectId(), test.getSessionId(), test.getStartTime(), test.getEndTime(), test.getEnv(), test.getBrowser(), test.getAuthorId());
-        ResultSet resultSet = DbUtils.insert(query);
-        return ResultSetUtils.getIdFromResultSet(resultSet);
+        return DbUtils.insert(query);
     }
 
     public void updateTest(TestDao test) {
