@@ -26,12 +26,8 @@ public class DbUtils {
                 .executeUpdate();
     }
 
-    public static int delete(String query) {
-        try {
-            Statement statement = connection.createStatement();
-            return statement.executeUpdate(query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static void delete(String query) {
+        connection.createQuery(query)
+                .executeUpdate();
     }
 }
