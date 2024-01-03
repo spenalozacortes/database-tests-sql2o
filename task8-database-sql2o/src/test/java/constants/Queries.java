@@ -19,8 +19,4 @@ public enum Queries {
     DELETE_TEST(QueriesConfig.getDeleteTest());
 
     private final String query;
-
-    public String getQuery(Object... varargs) {
-        return String.format(this.query, varargs);
-    }
 }
