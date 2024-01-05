@@ -8,7 +8,7 @@ public class EnvironmentConfig {
     private static final ConfigReader CONFIG_READER = new ConfigReader("src/test/resources/environment.json");
 
     public static String getBaseUri() {
-        return CONFIG_READER.getValueByKey("baseURI").getAsString();
+        return CONFIG_READER.getValueByKey("baseUri").getAsString();
     }
 
     public static String getEnv() {

@@ -1,4 +1,4 @@
 {
-  "baseURI": "https://jsonplaceholder.typicode.com",
+  "baseUri": "https://jsonplaceholder.typicode.com",
   "browser": "null"
 }
