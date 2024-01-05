@@ -1,73 +1,38 @@
 package steps.database;
 
-import constants.DbParameters;
 import constants.Queries;
 import models.database.TestDao;
-import org.sql2o.Connection;
+import utils.DbUtils;
 import utils.UnionReportingConnectionHolder;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public class TestSteps {
 
-    private final Connection connection = UnionReportingConnectionHolder.getConnection();
-
-    public TestDao getTestById(Long id) {
-        String query = Queries.GET_TEST_BY_ID.getQuery();
-        List<TestDao> tests = connection.createQuery(query)
-                .addParameter(DbParameters.ID, id)
-                .executeAndFetch(TestDao.class);
-        return tests.isEmpty() ? null : tests.get(0);
-    }
+    private final DbUtils dbUtils = UnionReportingConnectionHolder.getDbUtils();
 
     public List<TestDao> getTests(String digits, int limit) {
-        String query = Queries.GET_TESTS.getQuery();
-        return connection.createQuery(query)
-                .addParameter(DbParameters.DIGITS, digits)
-                .addParameter(DbParameters.LIMIT, limit)
-                .executeAndFetch(TestDao.class);
+        String query = Queries.GET_TESTS.getQuery(digits, limit);
+        return dbUtils.select(query, TestDao.class);
+    }
+
+    public TestDao getTestById(Long id) {
+        String query = Queries.GET_TEST_BY_ID.getQuery(id);
+        return dbUtils.selectFirst(query, TestDao.class);
     }
 
     public Long insertTest(TestDao test) {
-        String query = Queries.INSERT_TEST.getQuery();
-        BigInteger id = (BigInteger) connection.createQuery(query, true)
-                .addParameter(DbParameters.NAME, test.getName())
-                .addParameter(DbParameters.STATUS_ID, test.getStatusId())
-                .addParameter(DbParameters.METHOD_NAME, test.getMethodName())
-                .addParameter(DbParameters.PROJECT_ID, test.getProjectId())
-                .addParameter(DbParameters.SESSION_ID, test.getSessionId())
-                .addParameter(DbParameters.START_TIME, test.getStartTime())
-                .addParameter(DbParameters.END_TIME, test.getEndTime())
-                .addParameter(DbParameters.ENV, test.getEnv())
-                .addParameter(DbParameters.BROWSER, test.getBrowser())
-                .addParameter(DbParameters.AUTHOR_ID, test.getAuthorId())
-                .executeUpdate()
-                .getKey();
-        return id.longValue();
+        String query = Queries.INSERT_TEST.getQuery(test.getName(), test.getStatusId(), test.getMethodName(), test.getProjectId(), test.getSessionId(), test.getStartTime(), test.getEndTime(), test.getEnv(), test.getBrowser(), test.getAuthorId());
+        return dbUtils.insert(query);
     }
 
     public void updateTest(TestDao test) {
-        String query = Queries.UPDATE_TEST.getQuery();
-        connection.createQuery(query)
-                .addParameter(DbParameters.NAME, test.getName())
-                .addParameter(DbParameters.STATUS_ID, test.getStatusId())
-                .addParameter(DbParameters.METHOD_NAME, test.getMethodName())
-                .addParameter(DbParameters.PROJECT_ID, test.getProjectId())
-                .addParameter(DbParameters.SESSION_ID, test.getSessionId())
-                .addParameter(DbParameters.START_TIME, test.getStartTime())
-                .addParameter(DbParameters.END_TIME, test.getEndTime())
-                .addParameter(DbParameters.ENV, test.getEnv())
-                .addParameter(DbParameters.BROWSER, test.getBrowser())
-                .addParameter(DbParameters.AUTHOR_ID, test.getAuthorId())
-                .addParameter(DbParameters.ID, test.getId())
-                .executeUpdate();
+        String query = Queries.UPDATE_TEST.getQuery(test.getName(), test.getStatusId(), test.getMethodName(), test.getProjectId(), test.getSessionId(), test.getStartTime(), test.getEndTime(), test.getEnv(), test.getBrowser(), test.getAuthorId(), test.getId());
+        dbUtils.update(query);
     }
 
     public void deleteTest(Long id) {
-        String query = Queries.DELETE_TEST.getQuery();
-        connection.createQuery(query)
-                .addParameter(DbParameters.ID, id)
-                .executeUpdate();
+        String query = Queries.DELETE_TEST.getQuery(id);
+        dbUtils.update(query);
     }
 }

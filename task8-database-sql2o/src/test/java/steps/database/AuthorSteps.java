@@ -1,35 +1,22 @@
 package steps.database;
 
-import constants.DbParameters;
 import constants.Queries;
 import models.database.AuthorDao;
-import org.sql2o.Connection;
+import utils.DbUtils;
 import utils.UnionReportingConnectionHolder;
-
-import java.math.BigInteger;
-import java.util.List;
 
 public class AuthorSteps {
 
-    private final Connection connection = UnionReportingConnectionHolder.getConnection();
+    private final DbUtils dbUtils = UnionReportingConnectionHolder.getDbUtils();
 
     public AuthorDao getAuthorByLogin(String login) {
-        String query = Queries.GET_AUTHOR_BY_LOGIN.getQuery();
-        List<AuthorDao> authors = connection.createQuery(query)
-                .addParameter(DbParameters.LOGIN, login)
-                .executeAndFetch(AuthorDao.class);
-        return authors.isEmpty() ? null : authors.get(0);
+        String query = Queries.GET_AUTHOR_BY_LOGIN.getQuery(login);
+        return dbUtils.selectFirst(query, AuthorDao.class);
     }
 
     public Long insertAuthor(AuthorDao author) {
-        String query = Queries.INSERT_AUTHOR.getQuery();
-        BigInteger id = (BigInteger) connection.createQuery(query, true)
-                .addParameter(DbParameters.NAME, author.getName())
-                .addParameter(DbParameters.LOGIN, author.getLogin())
-                .addParameter(DbParameters.EMAIL, author.getEmail())
-                .executeUpdate()
-                .getKey();
-        return id.longValue();
+        String query = Queries.INSERT_AUTHOR.getQuery(author.getName(), author.getLogin(), author.getEmail());
+        return dbUtils.insert(query);
     }
 
     public Long insertAuthorIfAbsent(AuthorDao author) {

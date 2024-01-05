@@ -1,33 +1,22 @@
 package steps.database;
 
-import constants.DbParameters;
 import constants.Queries;
 import models.database.ProjectDao;
-import org.sql2o.Connection;
+import utils.DbUtils;
 import utils.UnionReportingConnectionHolder;
-
-import java.math.BigInteger;
-import java.util.List;
 
 public class ProjectSteps {
 
-    private final Connection connection = UnionReportingConnectionHolder.getConnection();
+    private final DbUtils dbUtils = UnionReportingConnectionHolder.getDbUtils();
 
     public ProjectDao getProjectByName(String name) {
-        String query = Queries.GET_PROJECT_BY_NAME.getQuery();
-        List<ProjectDao> projects = connection.createQuery(query)
-                .addParameter(DbParameters.NAME, name)
-                .executeAndFetch(ProjectDao.class);
-        return projects.isEmpty() ? null : projects.get(0);
+        String query = Queries.GET_PROJECT_BY_NAME.getQuery(name);
+        return dbUtils.selectFirst(query, ProjectDao.class);
     }
 
     public Long insertProject(ProjectDao project) {
-        String query = Queries.INSERT_PROJECT.getQuery();
-        BigInteger id = (BigInteger) connection.createQuery(query, true)
-                .addParameter(DbParameters.NAME, project.getName())
-                .executeUpdate()
-                .getKey();
-        return id.longValue();
+        String query = Queries.INSERT_PROJECT.getQuery(project.getName());
+        return dbUtils.insert(query);
     }
 
     public Long insertProjectIfAbsent(ProjectDao project) {

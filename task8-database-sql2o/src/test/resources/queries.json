@@ -1,12 +1,12 @@
 {
-  "getAuthorByLogin": "SELECT * FROM author WHERE login = :login",
-  "getProjectByName": "SELECT * FROM project WHERE name = :name",
-  "getTestById": "SELECT id, name, status_id AS statusId, method_name AS methodName, project_id AS projectId, session_id AS sessionId, start_time AS startTime, end_time AS endTime, env, browser, author_id AS authorId FROM test WHERE id = :id",
-  "getTests": "SELECT id, name, status_id AS statusId, method_name AS methodName, project_id AS projectId, session_id AS sessionId, start_time AS startTime, end_time AS endTime, env, browser, author_id AS authorId FROM test WHERE id LIKE CONCAT('%', :digits, '%') LIMIT :limit",
-  "insertAuthor": "INSERT INTO author (name, login, email) VALUES (:name, :login, :email)",
-  "insertProject": "INSERT INTO project (name) VALUES (:name)",
-  "insertSession": "INSERT INTO session (session_key, build_number) VALUES (:sessionKey, :buildNumber)",
-  "insertTest": "INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES (:name, :statusId, :methodName, :projectId, :sessionId, :startTime, :endTime, :env, :browser, :authorId)",
-  "updateTest": "UPDATE test SET name = :name, status_id = :statusId, method_name = :methodName, project_id = :projectId, session_id = :sessionId, start_time = :startTime, end_time = :endTime, env = :env, browser = :browser, author_id = :authorId WHERE id = :id",
-  "deleteTest": "DELETE FROM test WHERE id = :id"
+  "getAuthorByLogin": "SELECT * FROM author WHERE login = '%s'",
+  "getProjectByName": "SELECT * FROM project WHERE name = '%s'",
+  "getTests": "SELECT id, name, status_id AS statusId, method_name AS methodName, project_id AS projectId, session_id AS sessionId, start_time AS startTime, end_time AS endTime, env, browser, author_id AS authorId FROM test  WHERE id LIKE '%%%s%%' LIMIT %d",
+  "getTestById": "SELECT id, name, status_id AS statusId, method_name AS methodName, project_id AS projectId, session_id AS sessionId, start_time AS startTime, end_time AS endTime, env, browser, author_id AS authorId FROM test WHERE id = %d",
+  "insertAuthor": "INSERT INTO author (name, login, email) VALUES ('%s', '%s', '%s')",
+  "insertProject": "INSERT INTO project (name) VALUES ('%s')",
+  "insertSession": "INSERT INTO session (session_key, build_number) VALUES ('%s', %d)",
+  "insertTest": "INSERT INTO test (name, status_id, method_name, project_id, session_id, start_time, end_time, env, browser, author_id) VALUES ('%s', %d, '%s', %d, %d, '%s', '%s', '%s', '%s', %d)",
+  "updateTest": "UPDATE test SET name = '%s', status_id = %d, method_name = '%s', project_id = %d, session_id = %d, start_time = '%s', end_time = '%s', env = '%s', browser = '%s', author_id = %d WHERE id = %d",
+  "deleteTest": "DELETE FROM test WHERE id = %d"
 }
