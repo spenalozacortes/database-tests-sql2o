@@ -4,14 +4,14 @@ import constants.DbParameters;
 import constants.Queries;
 import models.database.ProjectDao;
 import org.sql2o.Connection;
-import utils.DbConnector;
+import utils.UnionReportingConnectionHolder;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public class ProjectSteps {
 
-    private final Connection connection = DbConnector.getConnection();
+    private final Connection connection = UnionReportingConnectionHolder.getConnection();
 
     public ProjectDao getProjectByName(String name) {
         String query = Queries.GET_PROJECT_BY_NAME.getQuery();

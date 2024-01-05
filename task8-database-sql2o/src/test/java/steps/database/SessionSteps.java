@@ -4,13 +4,13 @@ import constants.DbParameters;
 import constants.Queries;
 import models.database.SessionDao;
 import org.sql2o.Connection;
-import utils.DbConnector;
+import utils.UnionReportingConnectionHolder;
 
 import java.math.BigInteger;
 
 public class SessionSteps {
 
-    private final Connection connection = DbConnector.getConnection();
+    private final Connection connection = UnionReportingConnectionHolder.getConnection();
 
     public Long insertSession(SessionDao session) {
         String query = Queries.INSERT_SESSION.getQuery();

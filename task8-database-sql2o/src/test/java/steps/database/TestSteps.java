@@ -4,14 +4,14 @@ import constants.DbParameters;
 import constants.Queries;
 import models.database.TestDao;
 import org.sql2o.Connection;
-import utils.DbConnector;
+import utils.UnionReportingConnectionHolder;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public class TestSteps {
 
-    private final Connection connection = DbConnector.getConnection();
+    private final Connection connection = UnionReportingConnectionHolder.getConnection();
 
     public TestDao getTestById(Long id) {
         String query = Queries.GET_TEST_BY_ID.getQuery();

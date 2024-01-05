@@ -6,7 +6,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import steps.database.TestSteps;
-import utils.DbConnector;
+import utils.UnionReportingConnectionHolder;
 import utils.RandomUtils;
 
 import java.util.ArrayList;
@@ -50,6 +50,6 @@ public class DataProcessingTest extends BaseTest {
             testSteps.deleteTest(id);
             Assert.assertNull(testSteps.getTestById(id), "Test was not deleted");
         }
-        DbConnector.closeConnection();
+        UnionReportingConnectionHolder.closeDbUtils();
     }
 }

@@ -4,14 +4,14 @@ import constants.DbParameters;
 import constants.Queries;
 import models.database.AuthorDao;
 import org.sql2o.Connection;
-import utils.DbConnector;
+import utils.UnionReportingConnectionHolder;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public class AuthorSteps {
 
-    private final Connection connection = DbConnector.getConnection();
+    private final Connection connection = UnionReportingConnectionHolder.getConnection();
 
     public AuthorDao getAuthorByLogin(String login) {
         String query = Queries.GET_AUTHOR_BY_LOGIN.getQuery();
