@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DbUtils {
 
-    private Sql2o sql2o;
+    private final Sql2o sql2o;
 
     public DbUtils(String url, String user, String password) {
         this.sql2o = new Sql2o(url, user, password);
