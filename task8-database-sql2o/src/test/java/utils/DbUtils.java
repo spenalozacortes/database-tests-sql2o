@@ -23,9 +23,8 @@ public class DbUtils {
 
     public <T> T selectFirst(String query, Class<T> model) {
         try (Connection connection = sql2o.open()) {
-            List<T> results = connection.createQuery(query)
-                    .executeAndFetch(model);
-            return results.isEmpty() ? null : results.get(0);
+            return connection.createQuery(query)
+                    .executeAndFetchFirst(model);
         }
     }
 
