@@ -18,8 +18,4 @@ public class UnionReportingConnectionHolder {
         }
         return dbUtils;
     }
-
-    public static void closeDbUtils() {
-        dbUtils = null;
-    }
 }
